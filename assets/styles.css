@@ -906,3 +906,6 @@ kbd {
   .player-term pre .l.new { animation: none; }
   .pl-agents li, .pl-sys-s b { transition: none; }
 }
+
+/* Inline control icons. currentColor so they follow the button in both themes. */
+.ico { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }

@@ -199,8 +199,10 @@
     'tester', 'reviewer', 'security', 'docs', 'release', 'retro',
   ];
 
-  // A bug route skips these two. Saying so is better than quietly hiding them.
-  var OFF_ROUTE = { architect: 1, 'db-engineer': 1 };
+  // Which specialists run depends on the ticket, so nothing is struck out.
+  // A defect confined to one file would skip the architect and the database
+  // engineer. This one reaches three layers, so it does not.
+  var OFF_ROUTE = {};
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -247,10 +249,11 @@
       body: 'Four accumulators add raw minor units straight across six currencies. The' +
         ' expression is the exact expression, with the file and line.' +
         ' A rupee, a yen and a cent are all being treated as the same unit.',
-      stage: 'analysis',
+      stage: 'analysis, decomposition',
       wait: 'nobody yet',
-      writes: '01-analysis.md',
+      writes: '01-analysis.md, 02-plan.md',
       live: 'analyst',
+      also: 'architect',
       term: [
         ['k1', '✓  analyst      the file it cited          1:14'],
         ['g1', '   4 sites · every claim cites file:line'],
@@ -313,6 +316,7 @@
       wait: 'nobody yet',
       writes: '04-implementation.md',
       live: 'developer',
+      also: 'db-engineer',
       term: [
         ['k1', '✓  developer    1 file, 4 sites       3:08'],
         ['g1', '   +96 −14 · 2 files changed'],
@@ -438,6 +442,14 @@
   var btnPlay = el('pl-play');
   var btnReset = el('pl-reset');
 
+  var ICO = function (d) {
+    return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>';
+  };
+  // A filled triangle and two bars, so the control reads at a glance rather
+  // than needing the word beside it.
+  var ICON_PLAY = ICO('<polygon points="7 4 19 12 7 20" fill="currentColor" stroke="none"/>');
+  var ICON_PAUSE = ICO('<rect x="7" y="5" width="3.4" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13.6" y="5" width="3.4" height="14" rx="1" fill="currentColor" stroke="none"/>');
+
   var index = 0;
   var timer = null;
   var playing = false;
@@ -556,7 +568,7 @@
   function start() {
     if (playing || index >= STEPS.length - 1) return;
     playing = true;
-    btnPlay.textContent = 'Pause';
+    btnPlay.innerHTML = ICON_PAUSE + 'Pause';
     btnPlay.setAttribute('aria-pressed', 'true');
     // Slower without the entrance animation, since each step arrives as a jump
     // rather than easing in and needs a beat longer to read.
@@ -565,7 +577,7 @@
 
   function stop() {
     playing = false;
-    btnPlay.textContent = 'Play';
+    btnPlay.innerHTML = ICON_PLAY + 'Play';
     btnPlay.setAttribute('aria-pressed', 'false');
     if (timer) { clearInterval(timer); timer = null; }
   }
@@ -625,5 +637,6 @@
     ).observe(root);
   }
 
+  btnPlay.innerHTML = ICON_PLAY + 'Play';
   go(0, false);
 })();
