@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ClicqSolve Sequent | An AI engineering team that runs your SDLC</title>
+<meta name="description" content="Sequent takes a Jira ticket to a pull request: root cause analysis, an adversarial review of the plan, implementation, regression tests, code review and security, with four points where it stops and asks a human." />
+<meta property="og:title" content="ClicqSolve Sequent | An AI engineering team that runs your SDLC" />
+<meta property="og:description" content="Ticket to pull request, with four human gates and an auditable record of every run." />
+<meta property="og:type" content="website" />
+<meta name="theme-color" content="#0b0d10" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffb020'/%3E%3Cpath d='M8 11h16M8 16h16M8 21h10' stroke='%2310131a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="brand-mark"></span>ClicqSolve</a>
+    <button class="nav-tog" aria-expanded="false" aria-label="Menu">Menu</button>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#run">A run</a>
+      <a href="#gates">Gates</a>
+      <a href="#numbers">Your numbers</a>
+      <a href="#engage">Engagement</a>
+      <button class="theme-tog" aria-label="Switch colour theme" title="Switch colour theme">◐</button>
+      <a class="btn btn-pri btn-sm" href="mailto:info@clicqsolve.com?subject=Sequent%20demo">Book a demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================ hero -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="tag"><span class="dot"></span> ClicqSolve Sequent</span>
+        <h1>Watch a Jira ticket become a <span class="hl">pull request.</span></h1>
+        <p class="frame">Investigate. Challenge. Build. Prove.</p>
+        <p class="lead">
+          An engineer types one line. Eleven specialist agents take the ticket through root
+          cause analysis, an adversarial review of their own plan, implementation, regression
+          tests, code review, security and delivery.
+        </p>
+        <p class="lead" style="margin-top:var(--sp4)">
+          It stops <strong style="color:var(--t1)">four times</strong> and asks a human.
+          It never ships without one.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-pri" href="mailto:info@clicqsolve.com?subject=Sequent%20demo">Book a live demo</a>
+          <a class="btn btn-sec" href="#run">See a full run</a>
+        </div>
+        <p class="sm hero-note">
+          Runs locally on each engineer's machine. Your models, your repository, your gates.
+          You own the code.
+        </p>
+      </div>
+
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i><b>your-repo / sequent</b></div>
+<pre><span class="g1">$</span> <span class="w1">/ticket ENG-4417</span>
+
+<span class="a1">════════════════════════════════════</span>
+  <span class="w1">SEQUENT / ENG-4417 / bug</span>
+  <span class="g1">Dashboard totals do not reconcile</span>
+<span class="a1">════════════════════════════════════</span>
+
+<span class="k1">✓</span>  analyst      <span class="g1">root cause cited</span> 1:14
+<span class="k1">✓</span>  challenger   <span class="a1">SOUND w/ corr</span>    0:52
+<span class="k1">✓</span>  developer    <span class="g1">1 file, 4 sites</span>  3:08
+<span class="k1">✓</span>  tester       <span class="g1">34 passing</span>       3:36
+<span class="k1">✓</span>  reviewer     <span class="g1">0 blocking</span>       1:36
+<span class="k1">✓</span>  security     <span class="g1">CLEAR</span>            1:28
+
+<span class="a1">┌──────────────────────────────────┐</span>
+<span class="a1">│</span> <span class="w1">GATE 4 of 4 / DELIVERY</span>           <span class="a1">│</span>
+<span class="a1">├──────────────────────────────────┤</span>
+<span class="a1">│</span> <span class="g1">Reported total was </span><span class="r1">wrong</span>          <span class="a1">│</span>
+<span class="a1">│</span> <span class="g1">It now matches the </span><span class="k1">ledger</span>         <span class="a1">│</span>
+<span class="a1">│</span> <span class="g1">Regression test proves it</span>        <span class="a1">│</span>
+<span class="a1">│</span>                                  <span class="a1">│</span>
+<span class="a1">│</span> <span class="w1">Commit, push, PR, comment?</span>       <span class="a1">│</span>
+<span class="a1">└──────────────────────────────────┘</span>
+
+<span class="g1">›</span> <span class="w1">_</span></pre>
+      </div>
+    </div>
+
+    <div class="stats rv">
+      <div class="stat"><div class="v">11</div><div class="k">specialist agents, each with one job and one refusal</div></div>
+      <div class="stat"><div class="v">4</div><div class="k">points where it stops and a human decides</div></div>
+      <div class="stat"><div class="v">17 min</div><div class="k">of agent time across ten stages, in the walkthrough below</div></div>
+      <div class="stat"><div class="v">0</div><div class="k">outward actions taken without approval</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================= problem -->
+<section class="sec raised" id="problem">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">01 / The problem</span>
+      <h2>Coding assistants got faster. Delivery did not.</h2>
+      <p class="lead">
+        Your engineers already have AI in the editor. Ask what changed about your cycle time and
+        the honest answer is usually "not much". Here is where the time actually goes.
+      </p>
+    </div>
+
+    <div class="g g4 bare rv">
+      <div class="card">
+        <span class="card-n">01</span>
+        <h3>Re-reading the ticket</h3>
+        <p>Every ticket is re-digested from scratch. Description, screenshots, comments, the two Slack threads. Nothing carries over from whoever last worked in that area.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">02</span>
+        <h3>Re-discovering the code</h3>
+        <p>The same grep, the same directories, the same conventions, once per ticket per engineer forever. The knowledge exists, just nowhere the next run can reach.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">03</span>
+        <h3>Confident wrong answers</h3>
+        <p>An assistant proposes a fix to a file that does not exist, or a helper with a different signature. Nothing checks the plan before someone builds on it.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">04</span>
+        <h3>Evidence built from memory</h3>
+        <p>What was tested, what was skipped, what is still risky, reconstructed at review time and thinner than anyone likes to admit.</p>
+      </div>
+    </div>
+
+    <div class="duo rv" style="margin-top:var(--sp7)">
+      <div class="panel">
+        <h3 style="margin-bottom:var(--sp3)">With an assistant <span class="mono sm" style="color:var(--t3)">TODAY</span></h3>
+        <div class="flow">
+          <div class="flow-row">
+            <span class="step-chip">Ticket arrives</span><span class="step-sep">→</span>
+            <span class="step-chip">A person reads it</span><span class="step-sep">→</span>
+            <span class="step-chip">A person greps</span>
+          </div>
+          <div class="flow-row">
+            <span class="step-chip ghost">assistant drafts</span><span class="step-sep">→</span>
+            <span class="step-chip">A person checks</span><span class="step-sep">→</span>
+            <span class="step-chip">A person ships</span>
+          </div>
+        </div>
+        <p class="sm" style="margin-top:var(--sp4)">
+          One step got faster. Five did not, and all of them still queue behind the same person.
+          Nothing was written down for the next run.
+        </p>
+      </div>
+
+      <div class="panel panel-amber">
+        <h3 style="margin-bottom:var(--sp3)">With Sequent <span class="mono sm" style="color:var(--t3)">WHAT WE BUILD</span></h3>
+        <div class="flow">
+          <div class="flow-row">
+            <span class="step-chip">Ticket arrives</span><span class="step-sep">→</span>
+            <span class="step-chip on">agents investigate</span><span class="step-sep">→</span>
+            <span class="step-chip gate">YOU DECIDE</span>
+          </div>
+          <div class="flow-row">
+            <span class="step-chip on">agents implement</span><span class="step-sep">→</span>
+            <span class="step-chip on">agents verify</span><span class="step-sep">→</span>
+            <span class="step-chip gate">YOU DECIDE</span>
+          </div>
+        </div>
+        <p class="sm" style="margin-top:var(--sp4)">
+          A person is still accountable, at the two moments where judgement changes the outcome.
+          Everything either side carries itself and leaves a record behind.
+        </p>
+      </div>
+    </div>
+
+    <div class="panel rv" style="margin-top:var(--sp5)">
+      <p class="lead" style="max-width:72ch">
+        None of that is a model problem. It is a <strong style="color:var(--t1)">process</strong>
+        problem. There is no structure that makes findings persist, no stage whose job is to
+        attack the plan, and no record that survives the terminal being closed.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= how -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">02 / How it works</span>
+      <h2>One command. A staged pipeline. Four gates.</h2>
+      <p class="lead">
+        Sequent installs into your repository as agent definitions and slash commands. No service
+        to run, no dashboard to log into. It lives where your engineers already work.
+      </p>
+    </div>
+
+    <div class="duo duo-a">
+      <ol class="rail rv">
+        <li><div class="rail-stage">
+          <div><h4>Intake</h4><p>Fetches the ticket from Jira exactly once, classifies it, opens a run record on disk.</p></div>
+          <span class="rail-owner">lead</span>
+        </div></li>
+        <li><div class="rail-stage">
+          <div><h4>Analysis</h4><p>Greps before it concludes. Every claim cites a file and a line, and it names what is already correct nearby.</p></div>
+          <span class="rail-owner">analyst</span>
+        </div></li>
+        <li><div class="rail-stage">
+          <div><h4>Architecture</h4><p>Features only. Cuts work into waves where no two tasks touch the same file.</p></div>
+          <span class="rail-owner">architect</span>
+        </div></li>
+        <li><div class="rail-stage rail-par">
+          <div><h4>Challenge</h4><p>Tries to <em>disprove</em> the analysis. Re-opens every cited path, greps the pattern independently, reports what it could not verify.</p></div>
+          <span class="rail-owner">challenger</span>
+        </div></li>
+
+        <li class="rail-gate">
+          <div class="gt"><span>◼</span> Gate 1 / Plan</div>
+          <p><b>Blocks every edit to a source file.</b> You see the root cause, the plan, and everything the challenger could not prove.</p>
+        </li>
+
+        <li><div class="rail-stage">
+          <div><h4>Implementation</h4><p>The approved plan and nothing else. Anything else it notices is written down, not fixed.</p></div>
+          <span class="rail-owner">developer</span>
+        </div></li>
+
+        <li class="rail-gate">
+          <div class="gt"><span>◼</span> Gate 2 / Implementation</div>
+          <p><b>Blocks the QA stage.</b> The diff plus a self check against the plan. Scope drift surfaces here, not at review.</p>
+        </li>
+
+        <li><div class="rail-stage">
+          <div><h4>QA</h4><p>For a bug, the regression test is written first and proven to fail against the unfixed code.</p></div>
+          <span class="rail-owner">tester</span>
+        </div></li>
+        <li><div class="rail-stage rail-par">
+          <div><h4>Review and security, in parallel</h4><p>Same diff, different files written. One reads it hunk by hunk, the other hunts injection, authz, secrets and bulk data paths.</p></div>
+          <span class="rail-owner">reviewer / security</span>
+        </div></li>
+
+        <li class="rail-gate">
+          <div class="gt"><span>◼</span> Gate 3 / QA</div>
+          <p><b>Blocks the delivery gate.</b> You accept the evidence and the residual risk, not the claim that it passed.</p>
+        </li>
+
+        <li><div class="rail-stage">
+          <div><h4>Docs</h4><p>Finds documentation the change just made false. Drafts the release note and the PR body.</p></div>
+          <span class="rail-owner">docs</span>
+        </div></li>
+
+        <li class="rail-gate">
+          <div class="gt"><span>◼</span> Gate 4 / Delivery</div>
+          <p><b>Blocks every outward facing action.</b> The exact branch, commit message, PR body and Jira comment, shown before any of it happens.</p>
+        </li>
+
+        <li><div class="rail-stage">
+          <div><h4>Release</h4><p>Branch, commit, push, pull request, Jira comment. Never a merge, never a force push.</p></div>
+          <span class="rail-owner">release</span>
+        </div></li>
+        <li><div class="rail-stage">
+          <div><h4>Retro</h4><p>What the plan got wrong, where the run stalled, and concrete edits to propose to the agent definitions.</p></div>
+          <span class="rail-owner">retro</span>
+        </div></li>
+      </ol>
+
+      <div class="panel rv">
+        <span class="eyebrow">The rule underneath</span>
+        <h3 style="margin-bottom:var(--sp4)">Nothing is asserted that was not read</h3>
+        <p style="color:var(--t2);font-size:14.5px;line-height:1.6;margin-bottom:var(--sp5)">
+          Every claim in a Sequent artifact names the file and line it came from. An agent that
+          cannot find something says so, and the challenger checks. A truthful "I could not verify
+          this" is a better outcome than a plausible guess, because at a gate a human can act on
+          the first and cannot act on the second.
+        </p>
+        <div class="kv">
+          <div><span class="k">Analysis</span><span class="v">cites file:line</span></div>
+          <div><span class="k">Challenge</span><span class="v">re-opens every citation</span></div>
+          <div><span class="k">QA</span><span class="v">pastes real output</span></div>
+          <div><span class="k">Review</span><span class="v">attests hunks read</span></div>
+          <div><span class="k">Security</span><span class="v">CLEAR or findings</span></div>
+          <div><span class="k">Retro</span><span class="v">records what it got wrong</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= run -->
+<section class="sec raised" id="run">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">03 / What a run looks like</span>
+      <h2>Ten stages, four gates, one pull request</h2>
+      <p class="lead">
+        A reporting bug: a total on a dashboard is wrong, and finance cannot close the month
+        against it. Below is the shape every run takes, whatever the ticket. Step through it, or
+        let it play.
+      </p>
+    </div>
+
+    <div class="player rv" id="player" tabindex="-1" aria-roledescription="run walkthrough">
+      <!-- terminal, accumulates as the run advances -->
+      <div class="player-term">
+        <div class="term-bar">
+          <i></i><i></i><i></i>
+          <b id="pl-crumb">your-repo / sequent</b>
+        </div>
+        <pre id="pl-term" aria-hidden="true"></pre>
+      </div>
+
+      <!-- the narration and the controls -->
+      <div class="player-card">
+        <p class="pl-count"><b id="pl-n">01</b><span>/ 10</span></p>
+        <h3 id="pl-title">One line starts it</h3>
+        <p class="pl-body" id="pl-body"></p>
+
+        <dl class="pl-state">
+          <div><dt>Stage</dt><dd id="pl-stage"></dd></div>
+          <div><dt>Waiting on</dt><dd id="pl-wait"></dd></div>
+          <div><dt>Written so far</dt><dd id="pl-writes"></dd></div>
+        </dl>
+
+        <div class="pl-ctl">
+          <button type="button" class="btn btn-sec btn-sm" id="pl-prev" aria-label="Previous step">Prev</button>
+          <button type="button" class="btn btn-pri btn-sm" id="pl-next" aria-label="Next step">Next</button>
+        </div>
+        <div class="pl-ctl">
+          <button type="button" class="btn btn-sec btn-sm" id="pl-play" aria-pressed="false">Play</button>
+          <button type="button" class="btn btn-sec btn-sm" id="pl-reset">Reset</button>
+        </div>
+
+        <div class="pl-dots" id="pl-dots" role="tablist" aria-label="Run steps"></div>
+        <p class="pl-keys">
+          Click the player, then use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> to step and
+          <kbd>Space</kbd> to play or pause.
+        </p>
+      </div>
+
+      <!-- the eleven pipeline agents, plus the one outside it -->
+      <div class="player-rail">
+        <p class="pl-rail-h">The team, and who is working right now</p>
+        <ol class="pl-agents" id="pl-agents"></ol>
+        <p class="pl-rail-f" id="pl-route">
+          This ticket is a <b>bug</b>, so the architect and the database engineer are not on the
+          route. Sequent skips them rather than inventing work for them.
+        </p>
+      </div>
+
+      <!-- the two systems the run actually touches -->
+      <div class="player-jira">
+        <p class="pl-sys-h"><span class="pl-sys-dot jira"></span>Jira &middot; ENG-4417</p>
+        <p class="pl-sys-t">Dashboard totals do not reconcile against the ledger</p>
+        <p class="pl-sys-s">Status <b id="pl-jira-status" data-s="todo">To Do</b></p>
+        <ul class="pl-sys-log" id="pl-jira-log"></ul>
+      </div>
+
+      <div class="player-pr">
+        <p class="pl-sys-h"><span class="pl-sys-dot gh"></span>GitHub &middot; pull request</p>
+        <div id="pl-pr-empty" class="pl-sys-empty">
+          Nothing here yet. Nothing reaches GitHub before the fourth gate is approved.
+        </div>
+        <div id="pl-pr-body" hidden>
+          <p class="pl-sys-t">fix(reports): correct the aggregation on the summary endpoint [ENG-4417]</p>
+          <p class="pl-sys-s"><b class="ok">+96 &minus;14</b> &middot; 2 files &middot; <span id="pl-pr-branch">sequent/ENG-4417-summary-aggregation</span></p>
+          <ul class="pl-sys-log">
+            <li>Opened against <code>main</code>, never merged</li>
+            <li>Body written by the docs agent, citing the run</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- the payoff, stated once, outside the player -->
+    <div class="panel rv pl-payoff">
+      <div>
+        <h3 style="margin-bottom:var(--sp4);font-size:18px">What a gate puts in front of you</h3>
+        <ul class="checks">
+          <li><strong>A claim with a citation.</strong> Every finding names the file and the line it came from, so you can open it rather than take it on trust.</li>
+          <li><strong>What it could not prove.</strong> Any check that was blocked or unavailable is listed as loudly as the ones that passed.</li>
+          <li><strong>What approving unblocks.</strong> Stated before you answer, not after.</li>
+          <li><strong>A way to say no.</strong> Rejecting is recorded with your reason, and the stage runs again with the correction.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="sm">
+          The gate never asks you to trust a green tick. On a reporting bug it shows the figure
+          before and the figure after, against the same data, so you can check it against whatever
+          raised the ticket in the first place.
+        </p>
+        <p class="sm" style="margin-top:var(--sp4)">
+          The walkthrough above is illustrative. On your codebase the stages, the gates and the
+          evidence are the same; the file names are yours.
+        </p>
+        <p class="sm" style="margin-top:var(--sp4)">
+          We will run it on a ticket from your own backlog on the call, which is a better test than
+          any example we could publish.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================================== gates -->
+<section class="sec" id="gates">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">04 / Control</span>
+      <h2>Four gates. Approval never carries forward.</h2>
+      <p class="lead">
+        A gate is approved by a human, in that session, in response to named artifacts. An
+        approval given for one version of a plan does not survive a change to it, and a passing
+        test suite is never authorisation to ship.
+      </p>
+    </div>
+
+    <div class="g g4 rv">
+      <div class="card gate-card">
+        <span class="card-n">GATE 1</span>
+        <h3>Plan</h3>
+        <p>After the challenger has attacked the analysis. You see the root cause, the plan, and everything it could not verify.</p>
+        <div class="card-foot"><b>Blocks:</b> any edit to a source file</div>
+      </div>
+      <div class="card gate-card">
+        <span class="card-n">GATE 2</span>
+        <h3>Implementation</h3>
+        <p>The diff, and a self check against the plan. Scope drift is reported here rather than discovered at review.</p>
+        <div class="card-foot"><b>Blocks:</b> the QA stage</div>
+      </div>
+      <div class="card gate-card">
+        <span class="card-n">GATE 3</span>
+        <h3>QA</h3>
+        <p>Test evidence, code review, security findings, and the residual risk stated plainly. You accept evidence, not a claim.</p>
+        <div class="card-foot"><b>Blocks:</b> the delivery gate</div>
+      </div>
+      <div class="card gate-card">
+        <span class="card-n">GATE 4</span>
+        <h3>Delivery</h3>
+        <p>The exact branch name, commit message, PR body and Jira comment, before any of it happens.</p>
+        <div class="card-foot"><b>Blocks:</b> every outward facing action</div>
+      </div>
+    </div>
+
+    <div class="duo rv" style="margin-top:var(--sp5)">
+      <div class="panel">
+        <h3 style="margin-bottom:var(--sp4)">What Sequent will not do</h3>
+        <ul class="checks no">
+          <li>Merge a pull request.</li>
+          <li>Push to your default branch, or force push anywhere.</li>
+          <li>Post to Jira, push, or open a PR before Gate 4 is approved.</li>
+          <li>Weaken an assertion or skip a test to turn a suite green.</li>
+          <li>Report a check as passed when it was blocked.</li>
+        </ul>
+      </div>
+      <div class="panel panel-amber">
+        <h3 style="margin-bottom:var(--sp4)">Why the gates are the product</h3>
+        <p style="color:var(--t2);font-size:14.5px;line-height:1.6">
+          Delivery is a separate agent that verifies it was explicitly told Gate 4 was approved,
+          in that invocation. It will not act on "QA passed" or "the reviewer approved".
+        </p>
+        <p style="color:var(--t2);font-size:14.5px;line-height:1.6;margin-top:var(--sp4)">
+          Every other agent's caution is wasted if the one that touches the outside world is
+          casual about it. So that agent is the strictest one in the system.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== agents -->
+<section class="sec raised" id="agents">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">05 / The team</span>
+      <h2>Eleven in the pipeline, one outside it</h2>
+      <p class="lead">
+        Each agent has one job and one thing it refuses to do. The refusal is the part that
+        matters: it stops a run quietly producing a confident, wrong answer. Every agent is a
+        file in your repository, so you can read them, change them, and argue with them in
+        code review.
+      </p>
+    </div>
+
+    <div class="g g4 rv">
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">an</span><span class="agent-nm">analyst</span></div>
+        <p>Root cause or technical spec, every claim cited to a file and a line.</p>
+        <div class="card-foot"><b>Will not</b> cite a path it has not opened.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">ar</span><span class="agent-nm">architect</span></div>
+        <p>Decomposition into waves that are safe to run in parallel.</p>
+        <div class="card-foot"><b>Will not</b> put two tasks on one file in one wave.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">ch</span><span class="agent-nm">challenger</span></div>
+        <p>Trying to disprove the plan before a human is asked to approve it.</p>
+        <div class="card-foot"><b>Will not</b> soften a blocking finding to keep the run moving.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">de</span><span class="agent-nm">developer</span></div>
+        <p>The approved plan, and only that.</p>
+        <div class="card-foot"><b>Will not</b> fix something it was not asked to fix.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">db</span><span class="agent-nm">db-engineer</span></div>
+        <p>Schema, migrations and queries, each one reversible.</p>
+        <div class="card-foot"><b>Will not</b> write a migration it has not run.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">te</span><span class="agent-nm">tester</span></div>
+        <p>Evidence. Real commands, real pasted output, the failing test first.</p>
+        <div class="card-foot"><b>Will not</b> report a result it did not observe.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">re</span><span class="agent-nm">reviewer</span></div>
+        <p>The diff, read hunk by hunk, with an attestation of what it read.</p>
+        <div class="card-foot"><b>Will not</b> approve a diff it did not read.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">se</span><span class="agent-nm">security</span></div>
+        <p>Injection, authorization, secrets, bulk data paths, dependencies.</p>
+        <div class="card-foot"><b>Will not</b> mark CLEAR to keep the run moving.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">do</span><span class="agent-nm">docs</span></div>
+        <p>Documentation the change just made false, plus the release note.</p>
+        <div class="card-foot"><b>Will not</b> document a capability that does not exist.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">rl</span><span class="agent-nm">release</span></div>
+        <p>Branch, commit, push, pull request, Jira comment.</p>
+        <div class="card-foot"><b>Will not</b> act without Gate 4, or ever merge.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl">rt</span><span class="agent-nm">retro</span></div>
+        <p>What the plan got wrong, and concrete edits to propose.</p>
+        <div class="card-foot"><b>Will not</b> write a flattering retro.</div>
+      </div>
+      <div class="card">
+        <div class="agent-top"><span class="agent-gl" style="background:var(--s3);color:var(--t2)">rc</span><span class="agent-nm">rca</span></div>
+        <p>Production incidents, outside the pipeline. Stack trace in, root cause and containment out.</p>
+        <div class="card-foot"><b>Will not</b> change code during an incident.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== record -->
+<section class="sec" id="record">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">06 / The record</span>
+      <h2>Built to survive an audit, not just a demo</h2>
+      <p class="lead">
+        Artifacts are written to disk as the run happens, so a closed terminal loses nothing.
+        One command turns them into a single self contained HTML file you can send to whoever
+        asks why a change was safe.
+      </p>
+    </div>
+
+    <div class="g g3 bare rv">
+      <div class="card">
+        <span class="card-n">01</span>
+        <h3>Agents propose, humans approve</h3>
+        <p>No production impacting change happens without a named person authorising it in that session. Not a policy we ask agents to respect, a gate they cannot pass.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">02</span>
+        <h3>Stage artifacts</h3>
+        <p>Analysis, challenge, implementation, QA, review, security, docs, release, retro. Each a readable document, not a log.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">03</span>
+        <h3>Event and tool trace</h3>
+        <p>Append only. Every stage transition and material tool call, with why it was made, how long it took, whether it worked. Secrets never enter it.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">04</span>
+        <h3>Scoped permissions</h3>
+        <p>Agents authenticate as their own identity with the narrowest access that does the job. What an agent may reach is your decision, and revocable.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">05</span>
+        <h3>Evidence for compliance</h3>
+        <p>The record maps onto what auditors actually ask for: who approved what, on what basis, and what was verified before it shipped.</p>
+      </div>
+      <div class="card">
+        <span class="card-n">06</span>
+        <h3>Your boundary</h3>
+        <p>Runs on your infrastructure against your repositories. Where data must not leave, agents point at a model deployment inside your own tenancy.</p>
+      </div>
+    </div>
+
+    <div class="duo rv" style="margin-top:var(--sp5)">
+      <div class="panel panel-amber">
+        <h3 style="margin-bottom:var(--sp4)">Degradations are surfaced, never buried</h3>
+        <p style="color:var(--t2);font-size:14.5px;line-height:1.6">
+          When a capability is unavailable, an unreachable environment, a missing credential, a
+          tool that timed out, the run records it, prints it in the completion summary, and gives
+          it a section in the report with the manual action it leaves you.
+        </p>
+        <p style="color:var(--t2);font-size:14.5px;line-height:1.6;margin-top:var(--sp4)">
+          A pipeline that hides its gaps is worth less than one that admits them, because you
+          stop being able to trust the parts that did work.
+        </p>
+      </div>
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i><b>report.html / degradations</b></div>
+<pre><span class="g1">Stage</span>       <span class="w1">qa</span>
+<span class="g1">Capability</span>  <span class="w1">Browser QA against the</span>
+            <span class="w1">deployed dev environment</span>
+<span class="g1">Impact</span>      <span class="a1">Not reachable. UI verified</span>
+            <span class="a1">against the local app only.</span>
+<span class="g1">You must</span>    <span class="w1">Re-check the dashboard on</span>
+            <span class="w1">dev after this deploys.</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= numbers -->
+<section class="sec raised" id="numbers">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">07 / Engineering economics</span>
+      <h2>Quantify the opportunity in your own numbers</h2>
+      <p class="lead">
+        Ours are not the numbers that matter. Put yours in. Every assumption is an input you can
+        change, including the loaded cost multiplier most vendor calculators bury.
+      </p>
+    </div>
+
+    <div class="calc rv" data-calc>
+      <div class="calc-in">
+        <div class="calc-hd">
+          <h3>Your inputs</h3>
+          <div class="ccy" role="group" aria-label="Currency">
+            <button type="button" data-ccy="INR" aria-pressed="true">₹ INR</button>
+            <button type="button" data-ccy="USD" aria-pressed="false">$ USD</button>
+            <button type="button" data-ccy="GBP" aria-pressed="false">£ GBP</button>
+            <button type="button" data-ccy="EUR" aria-pressed="false">€ EUR</button>
+          </div>
+        </div>
+
+        <div class="fld">
+          <div class="fld-top"><label for="c-eng">Engineers</label><span class="fld-v" id="v-eng">120</span></div>
+          <input type="range" id="c-eng" min="20" max="1000" step="5" value="120" />
+        </div>
+
+        <div class="fld">
+          <div class="fld-top"><label for="c-sal">Average annual salary</label><span class="fld-v" id="v-sal">₹22.0 L</span></div>
+          <input type="number" id="c-sal" min="0" max="9000000" step="50000" value="2200000" />
+          <p class="fld-hint">Base salary per engineer, in your local market.</p>
+        </div>
+
+        <div class="fld">
+          <div class="fld-top"><label for="c-rel">Releases per month today</label><span class="fld-v" id="v-rel">4/mo</span></div>
+          <input type="range" id="c-rel" min="1" max="30" step="1" value="4" />
+        </div>
+
+        <div class="fld">
+          <div class="fld-top"><label for="c-gain">Productivity improvement</label><span class="fld-v" id="v-gain">45%</span></div>
+          <input type="range" id="c-gain" min="10" max="70" step="1" value="45" />
+          <p class="fld-hint">We design engagements toward 45%. Discovery measures your baseline first, so this is set from evidence rather than hope.</p>
+        </div>
+
+        <div class="fld">
+          <div class="fld-top"><label for="c-load">Fully loaded cost multiplier</label><span class="fld-v" id="v-load">1.80×</span></div>
+          <input type="number" id="c-load" min="1" max="3" step="0.05" value="1.8" />
+          <p class="fld-hint">Salary plus benefits, tooling, recruitment and management overhead. Most finance teams use 1.6 to 2.0. Set it to 1.0 to value capacity at bare salary.</p>
+        </div>
+      </div>
+
+      <div class="calc-out">
+        <div class="calc-hd"><h3>What that models</h3></div>
+
+        <div class="out-hero">
+          <span class="k">Estimated annual value created</span>
+          <span class="v" id="o-value">₹21.38 Cr</span>
+        </div>
+        <div class="out-row"><span class="k">Annual engineering spend</span><span class="v" id="o-spend">₹26.40 Cr</span></div>
+        <div class="out-row"><span class="k">Additional delivery capacity</span><span class="v" id="o-capacity">+54</span></div>
+        <div class="out-row"><span class="k">Release cadence</span><span class="v" id="o-releases">4 to 6 per month</span></div>
+        <div class="out-row"><span class="k">Value to spend ratio</span><span class="v" id="o-ratio">0.81×</span></div>
+
+        <div class="out-viz">
+          <div>
+            <div class="out-viz-k"><span>Annual spend</span><span class="mono" id="o-bk-spend">₹26.40 Cr</span></div>
+            <div class="out-viz-t"><div class="out-viz-b spend" id="o-bar-spend" style="width:100%"></div></div>
+          </div>
+          <div>
+            <div class="out-viz-k"><span>Value created</span><span class="mono" id="o-bk-value">₹21.38 Cr</span></div>
+            <div class="out-viz-t"><div class="out-viz-b value" id="o-bar-value" style="width:81%"></div></div>
+          </div>
+        </div>
+
+        <p class="out-note">
+          A model, not a forecast, and only as good as the inputs. It values recovered capacity at
+          what that capacity costs you today. It does not price the revenue you would earn by
+          shipping sooner, which is usually the larger number and the one we size during Discovery.
+        </p>
+      </div>
+    </div>
+
+    <details class="how-open rv">
+      <summary>Show the arithmetic</summary>
+      <pre>capacity  = engineers × productivity
+spend     = engineers × salary
+value     = capacity × salary × loaded multiplier
+releases  = releases × (1 + productivity)
+ratio     = value ÷ spend</pre>
+    </details>
+
+    <div class="head rv" style="margin-top:var(--sp9)">
+      <span class="eyebrow">What moves those numbers</span>
+      <h2 style="font-size:clamp(22px,2.2vw,28px)">Six levers, each measured not asserted</h2>
+      <p class="lead">
+        Each is a target the engagement is designed to reach, measured against the baseline we
+        take in week one and reported honestly whether or not we hit it.
+      </p>
+    </div>
+
+    <div class="g g3 bare rv">
+      <div class="card oc">
+        <div class="v">3-5×</div>
+        <h3>Engineer leverage</h3>
+        <p>Output per engineer, compounded across analysis, build, validation and review rather than in one step.</p>
+        <div class="card-foot">Target. Measured against your week one baseline.</div>
+      </div>
+      <div class="card oc">
+        <div class="v">50-80%</div>
+        <h3>Faster cycle time</h3>
+        <p>From ticket accepted to change merged, across architecture, build, validate and deploy.</p>
+        <div class="card-foot">Target. Measured against your week one baseline.</div>
+      </div>
+      <div class="card oc">
+        <div class="v">90%+</div>
+        <h3>Automated coverage</h3>
+        <p>Continuous validation across regression, security and contract tests, generated as work happens.</p>
+        <div class="card-foot">Target. Measured on the workflows we automate.</div>
+      </div>
+      <div class="card oc">
+        <div class="v">↑</div>
+        <h3>Capital efficiency</h3>
+        <p>More delivered per unit of payroll, because output expands while marginal cost holds close to flat.</p>
+        <div class="card-foot">Directional. Sized in your own numbers above.</div>
+      </div>
+      <div class="card oc">
+        <div class="v">↑</div>
+        <h3>Earlier revenue</h3>
+        <p>A compressed release cadence pulls recognition forward, and pulls renewals with it.</p>
+        <div class="card-foot">Directional. Depends on your commercial model.</div>
+      </div>
+      <div class="card oc">
+        <div class="v">↓</div>
+        <h3>Coordination tax</h3>
+        <p>Fewer status meetings and handoffs, because the state of every piece of work is written down as it happens.</p>
+        <div class="card-foot">Directional. Most visible above 50 engineers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ maturity -->
+<section class="sec" id="maturity">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">08 / Where this sits</span>
+      <h2>Four levels of AI in engineering</h2>
+      <p class="lead">
+        Each level is genuinely useful and each has a ceiling. Knowing which one you are at tells
+        you what your next increment is actually worth.
+      </p>
+    </div>
+
+    <div class="rv">
+      <div class="lv">
+        <span class="lv-id">L1</span>
+        <div><h3>Chat assistants</h3><p>A conversational tool in a browser tab. Helpful for drafting and explaining. No contact with your delivery process.</p></div>
+        <span class="lv-tag">Individual</span>
+      </div>
+      <div class="lv">
+        <span class="lv-id">L2</span>
+        <div><h3>Coding assistants</h3><p>Completion and suggestion inside the editor. Real gains on typing speed. Work still queues behind the same people in the same order.</p></div>
+        <span class="lv-tag">Most teams today</span>
+      </div>
+      <div class="lv">
+        <span class="lv-id">L3</span>
+        <div><h3>Single purpose agents</h3><p>An agent that writes tests, triages a queue, or reviews a diff. Each works. None hand off to each other, so a person is still the integration layer.</p></div>
+        <span class="lv-tag">Early adopters</span>
+      </div>
+      <div class="lv now">
+        <span class="lv-id">L4</span>
+        <div><h3>Orchestrated delivery</h3><p>Specialist agents carrying a whole unit of work between them, with named human gates at the decisions that matter and an auditable record of every run. This is Sequent.</p></div>
+        <span class="lv-tag">Where we work</span>
+      </div>
+    </div>
+
+    <p class="sm rv" style="margin-top:var(--sp5);max-width:68ch">
+      L4 does not mean unattended. The gates are the point. A system that ships without a human
+      is not a higher level, it is a different and worse risk profile.
+    </p>
+  </div>
+</section>
+
+<!-- =============================================================== stack -->
+<section class="sec raised" id="stack">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">09 / What it runs on</span>
+      <h2>Your stack, your machine, your models</h2>
+    </div>
+
+    <div class="duo">
+      <div class="panel rv">
+        <ul class="checks">
+          <li><strong>Runs locally</strong> on each engineer's machine. Nothing to host, no server to secure, no seat to provision.</li>
+          <li><strong>Your repository.</strong> Agents are files inside it, versioned and reviewable like any other code.</li>
+          <li><strong>Your issue tracker.</strong> Jira, Azure DevOps, GitHub Issues, Linear, over MCP.</li>
+          <li><strong>Your source control.</strong> GitHub, GitLab, Azure DevOps, Bitbucket.</li>
+          <li><strong>Your models</strong>, pluggable per agent, including a deployment inside your own cloud tenancy where data must not leave.</li>
+          <li><strong>Any language.</strong> The pipeline is language agnostic. Conventions come from your repository.</li>
+        </ul>
+      </div>
+      <div class="term rv">
+        <div class="term-bar"><i></i><i></i><i></i><b>setup</b></div>
+<pre><span class="g1"># install into your repo</span>
+<span class="w1">npx sequent install</span>
+
+<span class="g1"># check the environment</span>
+<span class="w1">npx sequent doctor</span>
+
+<span class="g1"># connect Jira over MCP</span>
+<span class="w1">npx sequent mcp:setup</span>
+
+<span class="g1"># run a ticket</span>
+<span class="w1">claude</span>
+<span class="a1">/ticket</span> <span class="w1">PROJ-123</span>
+
+<span class="g1"># share the evidence</span>
+<span class="w1">npx sequent report</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== engage -->
+<section class="sec" id="engage">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">10 / How we work</span>
+      <h2>Diagnose first. Build second. Hand over always.</h2>
+      <p class="frame">Five phases. Six weeks to live. Then continuous.</p>
+      <p class="lead">
+        We will not quote a build before we understand the work. The first phase is deliberately
+        small and fixed price, so you can stop after it with something useful in hand.
+      </p>
+    </div>
+
+    <div class="duo duo-a">
+      <div class="steps rv">
+        <div class="stp">
+          <div class="stp-when">Week 1<br />Fixed price</div>
+          <div>
+            <h3>Discovery</h3>
+            <p>SDLC audit, end to end ticket lifecycle mapping, toolchain review and an AI readiness assessment. You get a written diagnostic, a bottleneck analysis, an ROI model in your own numbers and a pilot recommendation.</p>
+          </div>
+        </div>
+        <div class="stp">
+          <div class="stp-when">Week 2</div>
+          <div>
+            <h3>Strategy</h3>
+            <p>Findings become a sequenced roadmap with an honest cost and effect estimate per workflow. This is where we tell you what <em>not</em> to automate.</p>
+          </div>
+        </div>
+        <div class="stp">
+          <div class="stp-when">Weeks 3 to 5</div>
+          <div>
+            <h3>Build</h3>
+            <p>Agents rewritten against your codebase, your conventions, your approval chain. It runs in your environment from the first week, not ours, against your real tickets.</p>
+          </div>
+        </div>
+        <div class="stp">
+          <div class="stp-when">Week 6</div>
+          <div>
+            <h3>Handover</h3>
+            <p>Role based enablement, named internal owners, and the documentation to change it without us. If you never call us again, the system keeps working.</p>
+          </div>
+        </div>
+        <div class="stp">
+          <div class="stp-when">Ongoing<br />Optional</div>
+          <div>
+            <h3>Optimisation</h3>
+            <p>Tuning against real usage, and the next workflow off the roadmap. On a retainer you can end.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-amber rv">
+        <h3 style="margin-bottom:var(--sp4)">What you get, in writing</h3>
+        <ul class="checks">
+          <li>You own the source, the prompts, the agent definitions and the integrations.</li>
+          <li>It runs in your environment. Your data does not become our training set.</li>
+          <li>Models are pluggable. No lock in to one vendor, including the one we start with.</li>
+          <li>Every consequential action waits for a named human.</li>
+          <li>Every run leaves an auditable record of what ran, why, and what it decided.</li>
+          <li>Baselines measured before we build, so the delta is arguable with data.</li>
+        </ul>
+        <h3 style="margin:var(--sp6) 0 var(--sp4)">What we will not claim</h3>
+        <ul class="checks no">
+          <li>That you can reduce headcount. That is your decision, not our promise.</li>
+          <li>That anything ships without a human. It does not, by design.</li>
+          <li>That a template will fit. If it would, you would not need us.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel rv" style="margin-top:var(--sp6)">
+      <span class="eyebrow">Then, the part that scales</span>
+      <h3 style="margin:var(--sp3) 0 var(--sp4);font-size:clamp(20px,2vw,25px)">The onboarding kit, so this works on forty repositories and not one</h3>
+      <div class="duo duo-a">
+        <p class="lead" style="font-size:16px">
+          Six weeks gets one repository live, and that is the part most vendors stop at. It is
+          also the part that proves nothing, because a hand built orchestrator for one codebase
+          is a demo. So the second thing we build is a generator you own.
+        </p>
+        <p class="sm">
+          It walks your estate, reads each repository, works out the stack, the package manager,
+          the test command, the conventions and the deployment shape, then emits a tailored
+          orchestrator for each one. Same pipeline, same gates, agents that know that codebase.
+          One estate wide run rather than forty hand builds, and you can rerun it yourself when a
+          new service appears.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= fit -->
+<section class="sec raised" id="fit">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">11 / Fit</span>
+      <h2>We are a bad fit for plenty of companies</h2>
+      <p class="lead">Saying so early saves us both a quarter.</p>
+    </div>
+
+    <div class="duo">
+      <div class="panel rv">
+        <h3 style="margin-bottom:var(--sp4)">Good fit</h3>
+        <ul class="checks">
+          <li>50 to 1,000 engineers, with a delivery process that repeats enough to be worth encoding.</li>
+          <li>Work already tracked somewhere: Jira, Azure DevOps, Linear, GitHub Issues.</li>
+          <li>Someone internal who will own the system after handover.</li>
+          <li>A tolerance for approval gates, rather than a demand for full autonomy.</li>
+          <li>Willingness to let us measure the current baseline honestly.</li>
+        </ul>
+      </div>
+      <div class="panel rv">
+        <h3 style="margin-bottom:var(--sp4)">Poor fit</h3>
+        <ul class="checks no">
+          <li>Looking for a licence to buy rather than a system to own.</li>
+          <li>Process still changing weekly. Automate it after it settles.</li>
+          <li>No one available to approve anything, and no appetite to appoint someone.</li>
+          <li>Expecting a headcount reduction on a fixed date.</li>
+          <li>Under 20 engineers. Off the shelf tools will serve you better and cost less.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= faq -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">12 / Questions</span>
+      <h2>What engineering leaders ask</h2>
+    </div>
+
+    <div class="faq rv">
+      <details>
+        <summary>Does this replace engineers?</summary>
+        <div class="ans">
+          <p>No, and we will not pitch it that way. Every gate needs a person with the judgement to approve or reject it, and the quality of a run depends heavily on that person.</p>
+          <p>What changes is what the engineer spends the day on: less re-reading tickets and re-grepping the same directories, more deciding. Teams generally use the recovered time to clear backlog, not to shrink.</p>
+        </div>
+      </details>
+      <details>
+        <summary>How is this different from Copilot, or an agent mode we already have?</summary>
+        <div class="ans">
+          <p>Those are excellent at the implementation step, which is one of eleven here. Sequent is the process around it: an agent whose only job is to attack the plan, a QA stage that must show the test failing first, a review that attests which hunks it read, and gates that stop the whole thing until a human decides.</p>
+          <p>In practice Sequent often calls a coding assistant to do the typing. The value is the structure and the evidence, not the code generation.</p>
+        </div>
+      </details>
+      <details>
+        <summary>What stops it committing something bad?</summary>
+        <div class="ans">
+          <p>Delivery is a separate agent that verifies it was explicitly told Gate 4 was approved, in that invocation. It will not act on "QA passed" or "the reviewer approved". It never merges, never force pushes, and never touches your default branch.</p>
+          <p>And because every stage wrote its evidence to disk, a bad outcome is diagnosable afterwards rather than a mystery.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Do we own it, or licence it?</summary>
+        <div class="ans">
+          <p>You own it. The source, the agent definitions, the prompts and the integration code, delivered into your repositories and running in your environment. There is no runtime that phones home and no licence that expires. If you stop working with us, nothing stops working.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Where does our code and data go?</summary>
+        <div class="ans">
+          <p>Nowhere we control. Sequent runs on your machines against your repositories, and talks to whichever model provider you choose. We do not host your data and nothing you give us trains anything.</p>
+          <p>For regulated work, agents can point at a model deployment inside your own cloud tenancy, so nothing leaves your boundary.</p>
+        </div>
+      </details>
+      <details>
+        <summary>How long does a ticket take, and what does a run cost?</summary>
+        <div class="ans">
+          <p>The worked example above is 17 minutes of agent time across ten stages, plus however long the four approvals take, which is up to your team's availability and is usually the larger number. Complex features take longer and often need a gate rejected and a stage re-run. That is the system working.</p>
+          <p>Cost is model usage per run, billed by whichever provider you pick. Nothing goes through us. Agents are assigned models by weight, so the cheap stages use cheap models.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Can we change the agents?</summary>
+        <div class="ans">
+          <p>You are expected to. They are markdown files in your repository. Teams routinely tighten the security checklist, add a stage for their own compliance step, or rewrite the reviewer to match their code review culture. The retro agent proposes those edits after each run, and a human decides whether to take them.</p>
+        </div>
+      </details>
+      <details>
+        <summary>What if our codebase is much bigger than the demo?</summary>
+        <div class="ans">
+          <p>The analysis stage takes longer and your repository conventions file matters more. The pipeline does not change. Week one of the build phase is us running this against your codebase, so you find out on real code rather than on ours.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================= cta -->
+<section class="sec-sm">
+  <div class="wrap">
+    <div class="cta rv">
+      <h2>Bring a ticket. We will run it.</h2>
+      <p class="lead">
+        The demo is a real run against a real repository, gates and all, not a recording. If you
+        would rather see it against your own codebase, that is week one of the build phase.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-pri" href="mailto:info@clicqsolve.com?subject=Sequent%20demo&amp;body=Company%3A%0AEngineering%20team%20size%3A%0AIssue%20tracker%3A%0ASource%20control%3A%0APrimary%20language%2Fstack%3A%0A">Book a live demo</a>
+        <a class="btn btn-sec" href="mailto:info@clicqsolve.com?subject=Assessment%20request">Book the 5 day assessment</a>
+      </div>
+      <p class="sm" style="margin-top:var(--sp6);max-width:60ch;margin-inline:auto">
+        Sequent is our engineering delivery system. We build custom agent systems for document
+        operations, customer operations and reconciliation on the same principles.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top"><span class="brand-mark"></span>ClicqSolve</a>
+        <p class="sm" style="margin-top:var(--sp4);max-width:34ch">
+          Custom AI automation for mid-market teams. We build the system, then hand you the keys.
+        </p>
+      </div>
+      <div>
+        <h4>Sequent</h4>
+        <div class="foot-l">
+          <a href="#problem">The problem</a>
+          <a href="#how">How it works</a>
+          <a href="#run">A run</a>
+          <a href="#gates">The gates</a>
+          <a href="#agents">The agents</a>
+          <a href="#numbers">Your numbers</a>
+        </div>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <div class="foot-l">
+          <a href="mailto:info@clicqsolve.com">info@clicqsolve.com</a>
+          <a href="mailto:info@clicqsolve.com?subject=Sequent%20demo">Book a demo</a>
+          <a href="#engage">Engagement model</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-end">
+      <span>© 2026 Clicqsolve Fintech Private Limited</span>
+      <span>Examples on this page are illustrative. No client data appears anywhere on it.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
