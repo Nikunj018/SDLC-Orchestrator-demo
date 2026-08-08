@@ -25,6 +25,7 @@
       <a href="#how">What we build</a>
       <a href="#run">See it running</a>
       <a href="#applies">Where it applies</a>
+      <a href="#standards">Standards</a>
       <a href="#numbers">Your numbers</a>
       <a href="#engage">How we work</a>
       <button class="theme-tog" aria-label="Switch colour theme" title="Switch colour theme">◐</button>
@@ -700,11 +701,143 @@
   </div>
 </section>
 
+<!-- =========================================================== standards -->
+<section class="sec raised" id="standards">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="eyebrow">08 / Engineering standards</span>
+      <h2>What we build to, and what we will not claim</h2>
+      <p class="lead">
+        Agent systems fail in ways ordinary software does not. They are confidently wrong, they
+        drift between runs, they can be talked into things by their own input, and they produce
+        no evidence unless you make them. These are the standards every build is held to, and
+        the honest limits of each one.
+      </p>
+    </div>
+
+    <div class="std rv">
+      <article>
+        <h3>Traceability</h3>
+        <p>
+          Every step is recorded as it happens: what was read, which tools were called with which
+          arguments, what came back, what was decided, and when. Each artifact is linked to the
+          step that produced it, so a finding can always be traced to the evidence behind it.
+          Records are append only, so a later step cannot quietly rewrite an earlier one.
+        </p>
+        <p class="std-note">
+          Emitted in <b>OpenTelemetry</b> form where you already run tracing, so agent runs land
+          beside the rest of your telemetry instead of in a tool only we can read.
+        </p>
+      </article>
+
+      <article>
+        <h3>Evaluation, including model as judge</h3>
+        <p>
+          Some things can be asserted: a test passes, a schema validates, a build succeeds. Some
+          cannot. Whether an analysis is actually grounded in the files it cites, or whether a
+          plan addresses the request, needs judgement, so a separate model grades it against an
+          explicit rubric. We also grade the <b>trajectory</b>, not only the answer: a correct
+          result reached by a reckless path is a problem that has not surfaced yet.
+        </p>
+        <p class="std-note">
+          <b>The limits, stated plainly.</b> Model judges carry position bias, self preference
+          bias and verbosity bias: they favour whichever option came first, output that looks like
+          their own, and longer answers. Mitigations are randomised ordering, rubrics written
+          before the run, a second model from a different family, and agreement with human
+          reviewers measured as Cohen's kappa rather than raw percentage. A judge is a signal.
+          It never replaces the human approval, and it is never the last word.
+        </p>
+      </article>
+
+      <article>
+        <h3>Reproducibility</h3>
+        <p>
+          Model, prompt and tool versions are pinned and recorded with the run. The inputs are
+          kept, so a run can be replayed rather than re-argued. When two runs of the same work
+          differ, the difference is explainable from the record instead of being folded into
+          "the model was having a bad day".
+        </p>
+        <p class="std-note">
+          These systems are not deterministic and we will not pretend otherwise. The commitment is
+          that variation is <b>visible and attributable</b>, not that it does not exist.
+        </p>
+      </article>
+
+      <article>
+        <h3>Least privilege, and untrusted input</h3>
+        <p>
+          Each agent gets only the access its job needs, and no more. The one that reads code
+          cannot deploy. The one that opens a change cannot merge it. Anything arriving from
+          outside, a ticket description, a comment, a fetched page, a file in a repository, is
+          treated as <b>data to be examined and never as instruction to be followed</b>. That is
+          the whole shape of indirect prompt injection, and it is a design constraint rather than
+          a filter bolted on afterwards.
+        </p>
+        <p class="std-note">
+          Built against the <b>OWASP Top 10 for LLM Applications</b> and the
+          <b>OWASP Top 10 for Agentic Applications</b>, which covers the risks that only appear
+          once a system takes actions rather than answering questions.
+        </p>
+      </article>
+
+      <article>
+        <h3>Behavioural limits enforced outside the model</h3>
+        <p>
+          A rule that exists only in a prompt is a suggestion. The actions that matter are
+          constrained by the credentials and the code path, not by asking politely: no merge, no
+          force push, no writing to a protected branch, nothing outward before an approval. If a
+          model decided to try, it would fail rather than succeed quietly.
+        </p>
+        <p class="std-note">
+          Paired with budgets and stage caps, so a stuck or looping run stops on a limit instead
+          of spending until somebody notices.
+        </p>
+      </article>
+
+      <article>
+        <h3>Human oversight, and the evidence for it</h3>
+        <p>
+          Approval is required at every consequential step, it is recorded with the approver and
+          their reasoning, and it never carries forward: approving one version of a plan does not
+          approve the next one. A passing test suite is not authorisation to ship. Any check that
+          could not run is reported as loudly as the ones that passed.
+        </p>
+        <p class="std-note">
+          This is also what your risk function will ask for. The oversight and record keeping
+          obligations in <b>ISO/IEC 42001</b>, the <b>NIST AI Risk Management Framework</b> and
+          the <b>EU AI Act</b> are satisfied with evidence, and the run record is the evidence.
+          We build to produce it. We are not a certification and we will not sign your
+          conformity assessment.
+        </p>
+      </article>
+    </div>
+
+    <div class="panel rv" style="margin-top:var(--sp6)">
+      <h3 style="margin-bottom:var(--sp4);font-size:18px">Why the caveats are on this page</h3>
+      <div class="duo duo-a">
+        <p class="sm">
+          Every vendor in this market will tell you their agents are observable, evaluated and
+          safe. Almost none will tell you that model judges are biased toward their own output,
+          that agent runs are not reproducible in the strict sense, or that a rule living in a
+          prompt is not a control. Those are the things that determine whether a system survives
+          contact with your auditors.
+        </p>
+        <p class="sm">
+          We would rather you heard the limits from us on a web page than found them yourself in
+          month four. If a standard here matters to you and we have not implemented it in the way
+          you need, that is a conversation for the diagnostic week, and the answer is sometimes
+          that we should not build the thing at all.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============================================================= numbers -->
 <section class="sec raised" id="numbers">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">08 / Engineering economics</span>
+      <span class="eyebrow">09 / Engineering economics</span>
       <h2>Quantify the opportunity in your own numbers</h2>
       <p class="lead">
         Ours are not the numbers that matter. Put yours in. Every assumption is an input you can
@@ -847,7 +980,7 @@ ratio     = value ÷ spend</pre>
 <section class="sec" id="maturity">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">09 / Where this sits</span>
+      <span class="eyebrow">10 / Where this sits</span>
       <h2>Four levels of AI in engineering</h2>
       <p class="lead">
         Each level is genuinely useful and each has a ceiling. Knowing which one you are at tells
@@ -889,7 +1022,7 @@ ratio     = value ÷ spend</pre>
 <section class="sec raised" id="stack">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">10 / What it runs on</span>
+      <span class="eyebrow">11 / What it runs on</span>
       <h2>Your stack, your machine, your models</h2>
     </div>
 
@@ -930,7 +1063,7 @@ ratio     = value ÷ spend</pre>
 <section class="sec" id="engage">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">11 / How we work</span>
+      <span class="eyebrow">12 / How we work</span>
       <h2>Diagnose first. Build second. Hand over always.</h2>
       <p class="frame">Five phases. Six weeks to live. Then continuous.</p>
       <p class="lead">
@@ -1022,7 +1155,7 @@ ratio     = value ÷ spend</pre>
 <section class="sec raised" id="fit">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">12 / Fit</span>
+      <span class="eyebrow">13 / Fit</span>
       <h2>We are a bad fit for plenty of companies</h2>
       <p class="lead">Saying so early saves us both a quarter.</p>
     </div>
@@ -1056,7 +1189,7 @@ ratio     = value ÷ spend</pre>
 <section class="sec" id="faq">
   <div class="wrap">
     <div class="head rv">
-      <span class="eyebrow">13 / Questions</span>
+      <span class="eyebrow">14 / Questions</span>
       <h2>What engineering leaders ask</h2>
     </div>
 

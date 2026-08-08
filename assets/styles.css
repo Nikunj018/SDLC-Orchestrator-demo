@@ -909,3 +909,37 @@ kbd {
 
 /* Inline control icons. currentColor so they follow the button in both themes. */
 .ico { width: 13px; height: 13px; flex: none; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ======================================================= engineering standards
+   Two columns of prose, each with a caveat block. The caveat is set apart
+   rather than hidden in the paragraph, because naming the limit is the point
+   of the section and a reader skimming should still hit it. */
+
+/* Flowed columns rather than a grid. A grid sizes each row to its tallest cell,
+   which left a short entry sitting above 200px of nothing. Columns balance the
+   two sides, and break-inside keeps an entry whole. */
+.std { column-count: 2; column-gap: var(--sp7); }
+.std > article {
+  break-inside: avoid;
+  min-width: 0;
+  padding-top: var(--sp5);
+  margin-bottom: var(--sp5);
+  border-top: 1px solid var(--line);
+}
+.std h3 { font-size: 17px; margin-bottom: var(--sp3); }
+.std p { color: var(--t2); font-size: 14.5px; line-height: 1.62; max-width: 62ch; }
+.std p + p { margin-top: var(--sp3); }
+.std b { color: var(--t1); font-weight: 600; }
+
+.std-note {
+  position: relative;
+  padding-left: var(--sp4);
+  border-left: 2px solid var(--amber);
+  color: var(--t3) !important;
+  font-size: 13.5px !important;
+}
+.std-note b { color: var(--t2); }
+
+@media (max-width: 860px) {
+  .std { column-count: 1; }
+}
