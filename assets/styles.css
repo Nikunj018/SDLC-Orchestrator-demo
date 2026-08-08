@@ -943,3 +943,119 @@ kbd {
 @media (max-width: 860px) {
   .std { column-count: 1; }
 }
+
+/* ================================================================== motion
+   Motion is added only where it carries meaning: sequence, magnitude,
+   orientation or liveness. Nothing moves while a reader is inside a sentence,
+   nothing parallaxes, and nothing is triggered twice.
+
+   Every block here has a prefers-reduced-motion counterpart at the bottom of
+   the file. A visitor who has asked for less movement gets the finished state
+   immediately, never a blank one.
+--------------------------------------------------------------------------- */
+
+/* --- reading progress -------------------------------------------------- --
+   The page is roughly 20,000px. A hairline is orientation, not decoration. */
+
+.prog {
+  position: fixed; top: 0; left: 0; height: 2px; width: 100%;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: var(--amber);
+  z-index: 90; pointer-events: none;
+  will-change: transform;
+}
+
+/* --- nav: which section am I in --------------------------------------- --
+   On a page this long, losing your place is the actual usability problem. */
+
+.nav-links a:not(.btn) { position: relative; }
+.nav-links a:not(.btn)::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1.5px;
+  background: var(--amber); border-radius: 1px;
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-links a:not(.btn).here { color: var(--t1); }
+.nav-links a:not(.btn).here::after { transform: scaleX(1); }
+
+/* --- the headline phrase ---------------------------------------------- --
+   One pass on load, under the phrase that carries the whole proposition. */
+
+h1 .hl { position: relative; }
+h1 .hl::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0.06em; height: 0.07em;
+  background: currentColor; opacity: 0.22; border-radius: 2px;
+  transform: scaleX(0); transform-origin: 0 50%;
+  animation: hlDraw 0.75s 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes hlDraw { to { transform: scaleX(1); } }
+
+/* --- staggered children ----------------------------------------------- --
+   A grid of cards landing as one slab reads as a screenshot. Landing in
+   sequence reads as authored, and takes the eye through them in order. */
+
+.stg > * {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stg.in > * { opacity: 1; transform: none; }
+.stg.in > *:nth-child(1) { transition-delay: 0ms; }
+.stg.in > *:nth-child(2) { transition-delay: 70ms; }
+.stg.in > *:nth-child(3) { transition-delay: 140ms; }
+.stg.in > *:nth-child(4) { transition-delay: 210ms; }
+.stg.in > *:nth-child(5) { transition-delay: 280ms; }
+.stg.in > *:nth-child(6) { transition-delay: 350ms; }
+.stg.in > *:nth-child(7) { transition-delay: 420ms; }
+.stg.in > *:nth-child(8) { transition-delay: 490ms; }
+
+/* --- the pipeline draws itself ---------------------------------------- --
+   This is the one section whose entire subject is order, so the motion is
+   the explanation rather than an ornament. The connecting line grows, each
+   stop lands after it, and the gates arrive with the emphasis they deserve. */
+
+.rail.seq li {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.42s ease, transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rail.seq li.lit { opacity: 1; transform: none; }
+
+.rail.seq .rail-stage::after { transform: scaleY(0); transform-origin: 50% 0; transition: transform 0.34s ease-out; }
+.rail.seq li.lit .rail-stage::after { transform: scaleY(1); }
+
+.rail.seq .rail-stage::before { transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; }
+.rail.seq li.lit .rail-stage::before { border-color: var(--amber); }
+/* A gate is the list item itself, not something inside one. It lands from
+   slightly under scale so the four stops register as arrivals rather than as
+   more list. */
+.rail.seq li.gate-lit { transform: translateY(10px) scale(0.985); }
+.rail.seq li.gate-lit.lit { transform: none; }
+
+
+/* --- the live dot ----------------------------------------------------- --
+   The one piece of purely ambient motion on the page, on the tag that says
+   the product is running. Slow, small, and it stops for reduced motion. */
+
+.tag .dot { animation: dotPulse 2.8s ease-in-out infinite; }
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.82); }
+}
+
+/* --- reduced motion --------------------------------------------------- --
+   Finished state, immediately. Never a hidden one. */
+
+@media (prefers-reduced-motion: reduce) {
+  .prog { display: none; }
+  h1 .hl::after { animation: none; transform: scaleX(1); }
+  .stg > * { opacity: 1; transform: none; transition: none; }
+  .nav-links a:not(.btn)::after { transition: none; }
+  .rail.seq li { opacity: 1; transform: none; transition: none; }
+  .rail.seq .rail-stage::after { transform: scaleY(1); transition: none; }
+  .rail.seq .rail-stage::before { transition: none; }
+  .rail.seq li.gate-lit { transform: none; }
+  .tag .dot { animation: none; }
+}
+
+/* A container that also staggers its children does not fade itself: two
+   compounding opacity animations read as muddy. The children carry it. */
+.rv.stg { opacity: 1; transform: none; }

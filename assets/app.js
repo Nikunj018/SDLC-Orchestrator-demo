@@ -640,3 +640,215 @@
   btnPlay.innerHTML = ICON_PLAY + 'Play';
   go(0, false);
 })();
+
+/* ---------------------------------------------------------------------------
+   Motion.
+
+   Four behaviours, each earning its place: reading position on a very long
+   page, which section you are in, the pipeline drawing itself in order because
+   order is that section's entire subject, and the hero terminal filling once so
+   the first thing a visitor sees is the product running rather than a picture
+   of it.
+
+   All of it is enhancement. With this file absent the page is complete and
+   every element is in its finished state.
+--------------------------------------------------------------------------- */
+
+(function () {
+  'use strict';
+
+  var reduced =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- reading progress --------------------------------------------------
+
+  if (!reduced) {
+    var bar = document.createElement('div');
+    bar.className = 'prog';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+
+    var ticking = false;
+    var paint = function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+      bar.style.transform = 'scaleX(' + p + ')';
+      ticking = false;
+    };
+    // rAF-coalesced: scroll fires far more often than the screen refreshes.
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', paint, { passive: true });
+    paint();
+  }
+
+  // --- which section am I in ---------------------------------------------
+
+  var navLinks = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]:not(.btn)'));
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var byId = {};
+    var watched = [];
+    navLinks.forEach(function (a) {
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el) { byId[el.id] = a; watched.push(el); }
+    });
+
+    var visible = {};
+    var mark = function () {
+      // The topmost section that is currently on screen wins, so the highlight
+      // does not flicker between two sections that overlap the viewport.
+      var best = null;
+      watched.forEach(function (el) {
+        if (!visible[el.id]) return;
+        if (!best || el.getBoundingClientRect().top < best.getBoundingClientRect().top) best = el;
+      });
+      navLinks.forEach(function (a) { a.classList.remove('here'); });
+      if (best && byId[best.id]) byId[best.id].classList.add('here');
+    };
+
+    var navObs = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+        mark();
+      },
+      // Discount the sticky nav, and only count a section once it is properly
+      // in view rather than one pixel over the edge.
+      { rootMargin: '-72px 0px -55% 0px' }
+    );
+    watched.forEach(function (el) { navObs.observe(el); });
+  }
+
+  // --- the pipeline draws itself -----------------------------------------
+
+  var rail = document.querySelector('.rail');
+  if (rail && 'IntersectionObserver' in window) {
+    rail.classList.add('seq');
+    var items = [].slice.call(rail.children);
+
+    // Gates get a ring on the timeline dot, so the four stops are findable
+    // without reading.
+    items.forEach(function (li) {
+      if (li.classList.contains('rail-gate')) li.classList.add('gate-lit');
+    });
+
+    if (reduced) {
+      items.forEach(function (li) { li.classList.add('lit'); });
+    } else {
+      var railObs = new IntersectionObserver(
+        function (entries, obs) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            obs.unobserve(e.target);
+            items.forEach(function (li, i) {
+              setTimeout(function () { li.classList.add('lit'); }, i * 110);
+            });
+          });
+        },
+        { threshold: 0.12 }
+      );
+      railObs.observe(rail);
+    }
+  }
+
+  // --- staggered children -------------------------------------------------
+
+  var stagger = document.querySelectorAll('.stg');
+  if (stagger.length) {
+    if (!('IntersectionObserver' in window) || reduced) {
+      [].forEach.call(stagger, function (el) { el.classList.add('in'); });
+    } else {
+      var stgObs = new IntersectionObserver(
+        function (entries, obs) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          });
+        },
+        { rootMargin: '0px 0px -8% 0px', threshold: 0.06 }
+      );
+      [].forEach.call(stagger, function (el) { stgObs.observe(el); });
+    }
+  }
+
+  // --- the hero terminal fills once --------------------------------------
+  //
+  // The markup is the finished output, so with JS off or reduced motion on, a
+  // visitor sees the complete run. This only withholds it briefly on the way in.
+
+  var heroPre = document.querySelector('.hero .term pre');
+  if (heroPre && !reduced) {
+    var raw = heroPre.innerHTML.split('\n');
+    heroPre.innerHTML = raw
+      .map(function (line) {
+        return '<span class="tl" style="opacity:0">' + (line === '' ? '&nbsp;' : line) + '</span>';
+      })
+      .join('');
+
+    var lines = heroPre.querySelectorAll('.tl');
+    [].forEach.call(lines, function (el) {
+      el.style.display = 'block';
+      el.style.transition = 'opacity .18s ease';
+    });
+
+    var run = function () {
+      [].forEach.call(lines, function (el, i) {
+        // Blank lines carry no information, so they do not cost a beat.
+        setTimeout(function () { el.style.opacity = '1'; }, 90 + i * 42);
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      var heroObs = new IntersectionObserver(
+        function (entries, obs) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            obs.unobserve(e.target);
+            run();
+          });
+        },
+        { threshold: 0.25 }
+      );
+      heroObs.observe(heroPre);
+    } else {
+      run();
+    }
+  }
+
+  // --- magnitude in the economics bars ------------------------------------
+  //
+  // The bars already transition width. Holding them at zero until the section
+  // is reached makes the comparison arrive as a movement rather than a fact
+  // that was always on screen.
+
+  var numbers = document.getElementById('numbers');
+  var barSpend = document.getElementById('o-bar-spend');
+  var barValue = document.getElementById('o-bar-value');
+
+  if (numbers && barSpend && barValue && !reduced && 'IntersectionObserver' in window) {
+    var target = { spend: barSpend.style.width, value: barValue.style.width };
+    barSpend.style.width = '0%';
+    barValue.style.width = '0%';
+
+    var barObs = new IntersectionObserver(
+      function (entries, obs) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          obs.unobserve(e.target);
+          // A frame of delay, so the browser has a zero width to animate from.
+          requestAnimationFrame(function () {
+            barSpend.style.width = target.spend || '100%';
+            barValue.style.width = target.value || '81%';
+          });
+        });
+      },
+      { threshold: 0.2 }
+    );
+    barObs.observe(numbers);
+  }
+})();
