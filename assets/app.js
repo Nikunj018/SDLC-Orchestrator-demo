@@ -1192,3 +1192,76 @@
     });
   }
 })();
+
+/* ---------------------------------------------------------------------------
+   Page-wide visual system.
+
+   Motion had been confined to the hero, which made everything below read as an
+   appendix. This wires three devices across every section: the oversized
+   section numeral, the rule that draws itself as a section arrives, and a
+   pointer-tracked highlight on cards.
+--------------------------------------------------------------------------- */
+
+(function () {
+  'use strict';
+
+  var reduced =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- the section numeral ------------------------------------------------
+  // Taken from the eyebrow rather than hardcoded, so renumbering a section
+  // cannot leave the watermark out of step with its heading.
+
+  var heads = document.querySelectorAll('.sec .head, .sec-sm .head');
+  [].forEach.call(heads, function (head) {
+    var eyebrow = head.querySelector('.eyebrow');
+    if (!eyebrow) return;
+    var m = (eyebrow.textContent || '').match(/^\s*(\d{1,2})\s*\//);
+    if (m) head.setAttribute('data-n', m[1]);
+  });
+
+  // --- the arriving rule ---------------------------------------------------
+
+  var sections = document.querySelectorAll('.sec');
+  if (!('IntersectionObserver' in window) || reduced) {
+    [].forEach.call(sections, function (s) { s.classList.add('seen'); });
+  } else {
+    var secObs = new IntersectionObserver(
+      function (entries, obs) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('seen');
+          obs.unobserve(e.target);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.02 }
+    );
+    [].forEach.call(sections, function (s) { secObs.observe(s); });
+  }
+
+  // --- pointer-tracked card highlight -------------------------------------
+  // One listener on the document rather than one per card, and it only writes
+  // custom properties, so nothing triggers layout.
+
+  if (!reduced && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+    var pending = null;
+
+    document.addEventListener(
+      'pointermove',
+      function (event) {
+        var card = event.target.closest ? event.target.closest('.g .card') : null;
+        if (!card) return;
+        pending = { card: card, x: event.clientX, y: event.clientY };
+        if (pending.raf) return;
+        requestAnimationFrame(function () {
+          if (!pending) return;
+          var r = pending.card.getBoundingClientRect();
+          pending.card.style.setProperty('--mx', Math.round(pending.x - r.left) + 'px');
+          pending.card.style.setProperty('--my', Math.round(pending.y - r.top) + 'px');
+          pending = null;
+        });
+      },
+      { passive: true }
+    );
+  }
+})();

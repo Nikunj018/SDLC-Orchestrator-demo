@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23ffb020'/%3E%3Cpath d='M8 11h16M8 16h16M8 21h10' stroke='%2310131a' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
@@ -44,21 +44,17 @@
         <h1>We build the AI system that runs <span class="hl">a whole unit of your work.</span></h1>
         <p class="frame">Your tools. Your approvals. You own it.</p>
         <p class="lead">
-          Not an assistant that helps one person type faster. A team of specialist agents that
-          carries an entire workflow from the request that starts it to the thing it produces,
-          inside the systems you already run.
+          A team of specialist agents that carries an entire workflow end to end, inside the systems you already run.
         </p>
         <p class="lead" style="margin-top:var(--sp4)">
-          It stops wherever a person needs to decide, and it will not act outside your approval.
-          We diagnose first, build it against your conventions, then hand it over.
+          It stops wherever a person needs to decide. We diagnose first, build against your conventions, then hand it over.
         </p>
         <div class="hero-cta">
           <a class="btn btn-pri" href="mailto:info@clicqsolve.com?subject=Custom%20AI%20automation%20-%20intro%20call">Book a call</a>
           <a class="btn btn-sec" href="#run">Watch one running</a>
         </div>
         <p class="sm hero-note">
-          Runs in your environment, on the models you choose. You own the source, the agents and
-          the integrations. There is nothing to licence and nothing hosted by us.
+          Your environment. Your models. Nothing to licence, nothing hosted by us.
         </p>
       </div>
 
@@ -108,9 +104,7 @@
       <span class="eyebrow">01 / The problem</span>
       <h2>AI made individuals faster. It did not change how work flows.</h2>
       <p class="lead">
-        Your teams already have AI in the tools they use. Ask what changed about how long work
-        actually takes to get through the organisation and the honest answer is usually "not
-        much". Here is where the time goes instead.
+        Ask what it changed about how long work takes to reach done. The honest answer is usually "not much".
       </p>
     </div>
 
@@ -299,13 +293,10 @@
       <h2>The one we can show you end to end</h2>
       <p class="lead">
         Software delivery, because it is the workflow we can demonstrate completely without a
-        customer's data in it. A reporting defect arrives as a ticket, and the system takes it
-        from there: work out the cause, attack its own plan, build, prove, and open a change for
-        review. Step through it, or let it play.
+        customer's data in it. Step through it, or let it play.
       </p>
       <p class="lead" style="margin-top:var(--sp4)">
-        Watch the shape rather than the subject matter. The same shape is what we build for a
-        workflow that has nothing to do with code.
+        Watch the shape, not the subject matter. That shape is what we build for workflows with nothing to do with code.
       </p>
     </div>
 
@@ -428,9 +419,7 @@
       <span class="eyebrow">04 / Where it applies</span>
       <h2>Software delivery is one shape. It is not the only one.</h2>
       <p class="lead">
-        A workflow is a candidate when it has a queue, a decision that needs judgement, a handoff
-        between people or systems, and an outcome somebody has to be able to justify later. Most
-        of the operational work in a company looks like that.
+        A queue, a decision needing judgement, a handoff, an outcome somebody must justify later. Most operational work looks like that.
       </p>
     </div>
 
@@ -557,10 +546,7 @@
       <span class="eyebrow">06 / The team</span>
       <h2>Specialists, not one model doing everything</h2>
       <p class="lead">
-        Each agent has one job and one thing it refuses to do. The refusal is the part that
-        matters: it stops a run quietly producing a confident, wrong answer. Every agent is a
-        file in your repository, so you can read them, change them, and argue with them in
-        code review.
+        One job each, and one thing each refuses to do. The refusal is the part that matters.
       </p>
     </div>
 
@@ -709,10 +695,7 @@
       <span class="eyebrow">08 / Engineering standards</span>
       <h2>What we build to, and what we will not claim</h2>
       <p class="lead">
-        Agent systems fail in ways ordinary software does not. They are confidently wrong, they
-        drift between runs, they can be talked into things by their own input, and they produce
-        no evidence unless you make them. These are the standards every build is held to, and
-        the honest limits of each one.
+        Confidently wrong, drifting between runs, talked into things by their own input. Here is what we hold against that, and where each one stops.
       </p>
     </div>
 
@@ -720,95 +703,63 @@
       <article>
         <h3>Traceability</h3>
         <p>
-          Every step is recorded as it happens: what was read, which tools were called with which
-          arguments, what came back, what was decided, and when. Each artifact is linked to the
-          step that produced it, so a finding can always be traced to the evidence behind it.
-          Records are append only, so a later step cannot quietly rewrite an earlier one.
+          Every step recorded as it happens, each artifact linked to the step that produced it, append only so nothing rewrites history.
         </p>
         <p class="std-note">
-          Emitted in <b>OpenTelemetry</b> form where you already run tracing, so agent runs land
-          beside the rest of your telemetry instead of in a tool only we can read.
+          Emitted as <b>OpenTelemetry</b>, so runs land in your telemetry and not a tool only we can read.
         </p>
       </article>
 
       <article>
         <h3>Evaluation, including model as judge</h3>
         <p>
-          Some things can be asserted: a test passes, a schema validates, a build succeeds. Some
-          cannot. Whether an analysis is actually grounded in the files it cites, or whether a
-          plan addresses the request, needs judgement, so a separate model grades it against an
-          explicit rubric. We also grade the <b>trajectory</b>, not only the answer: a correct
-          result reached by a reckless path is a problem that has not surfaced yet.
+          A test passing can be asserted. Whether an analysis is grounded in the files it cites cannot, so a separate model grades it against a rubric. We grade the <b>trajectory</b> too: a right answer reached recklessly is a problem that has not surfaced yet.
         </p>
         <p class="std-note">
-          <b>The limits, stated plainly.</b> Model judges carry position bias, self preference
-          bias and verbosity bias: they favour whichever option came first, output that looks like
-          their own, and longer answers. Mitigations are randomised ordering, rubrics written
-          before the run, a second model from a different family, and agreement with human
-          reviewers measured as Cohen's kappa rather than raw percentage. A judge is a signal.
-          It never replaces the human approval, and it is never the last word.
+          <b>The limit.</b> Judges favour whichever option came first, output resembling their
+          own, and longer answers. So: randomised ordering, rubrics written before the run, a
+          second model from another family, agreement measured as Cohen's kappa. A judge is a
+          signal, never the last word.
         </p>
       </article>
 
       <article>
         <h3>Reproducibility</h3>
         <p>
-          Model, prompt and tool versions are pinned and recorded with the run. The inputs are
-          kept, so a run can be replayed rather than re-argued. When two runs of the same work
-          differ, the difference is explainable from the record instead of being folded into
-          "the model was having a bad day".
+          Model, prompt and tool versions pinned and recorded. Inputs kept, so a run is replayed rather than re-argued.
         </p>
         <p class="std-note">
-          These systems are not deterministic and we will not pretend otherwise. The commitment is
-          that variation is <b>visible and attributable</b>, not that it does not exist.
+          <b>The limit.</b> These systems are not deterministic. The commitment is that variation is attributable, not absent.
         </p>
       </article>
 
       <article>
         <h3>Least privilege, and untrusted input</h3>
         <p>
-          Each agent gets only the access its job needs, and no more. The one that reads code
-          cannot deploy. The one that opens a change cannot merge it. Anything arriving from
-          outside, a ticket description, a comment, a fetched page, a file in a repository, is
-          treated as <b>data to be examined and never as instruction to be followed</b>. That is
-          the whole shape of indirect prompt injection, and it is a design constraint rather than
-          a filter bolted on afterwards.
+          The one that reads code cannot deploy. The one that opens a change cannot merge it. Anything arriving from outside is <b>data to examine, never instruction to follow</b>, which is the whole shape of indirect prompt injection.
         </p>
         <p class="std-note">
-          Built against the <b>OWASP Top 10 for LLM Applications</b> and the
-          <b>OWASP Top 10 for Agentic Applications</b>, which covers the risks that only appear
-          once a system takes actions rather than answering questions.
+          Built against the <b>OWASP Top 10 for LLM Applications</b>, and the <b>Agentic</b> list layered on top for risks that only appear once a system acts.
         </p>
       </article>
 
       <article>
         <h3>Behavioural limits enforced outside the model</h3>
         <p>
-          A rule that exists only in a prompt is a suggestion. The actions that matter are
-          constrained by the credentials and the code path, not by asking politely: no merge, no
-          force push, no writing to a protected branch, nothing outward before an approval. If a
-          model decided to try, it would fail rather than succeed quietly.
+          A rule that lives only in a prompt is a suggestion. No merge, no force push, no protected branch, nothing outward before approval, all enforced by credentials and code path. A model that tried would fail, not succeed quietly.
         </p>
         <p class="std-note">
-          Paired with budgets and stage caps, so a stuck or looping run stops on a limit instead
-          of spending until somebody notices.
+          Budgets and stage caps, so a looping run stops on a limit rather than spending until somebody notices.
         </p>
       </article>
 
       <article>
         <h3>Human oversight, and the evidence for it</h3>
         <p>
-          Approval is required at every consequential step, it is recorded with the approver and
-          their reasoning, and it never carries forward: approving one version of a plan does not
-          approve the next one. A passing test suite is not authorisation to ship. Any check that
-          could not run is reported as loudly as the ones that passed.
+          Recorded with the approver and their reasoning, and it never carries forward. A passing test suite is not authorisation to ship. Blocked checks are reported as loudly as passes.
         </p>
         <p class="std-note">
-          This is also what your risk function will ask for. The oversight and record keeping
-          obligations in <b>ISO/IEC 42001</b>, the <b>NIST AI Risk Management Framework</b> and
-          the <b>EU AI Act</b> are satisfied with evidence, and the run record is the evidence.
-          We build to produce it. We are not a certification and we will not sign your
-          conformity assessment.
+          <b>ISO/IEC 42001</b>, the <b>NIST AI Risk Management Framework</b> and the <b>EU AI Act</b> are satisfied with evidence, and the run record is the evidence. We are not a certification and will not sign your conformity assessment.
         </p>
       </article>
     </div>
@@ -817,17 +768,10 @@
       <h3 style="margin-bottom:var(--sp4);font-size:18px">Why the caveats are on this page</h3>
       <div class="duo duo-a">
         <p class="sm">
-          Every vendor in this market will tell you their agents are observable, evaluated and
-          safe. Almost none will tell you that model judges are biased toward their own output,
-          that agent runs are not reproducible in the strict sense, or that a rule living in a
-          prompt is not a control. Those are the things that determine whether a system survives
-          contact with your auditors.
+          Every vendor says observable, evaluated and safe. Almost none says that judges are biased toward their own output, that runs are not strictly reproducible, or that a rule in a prompt is not a control.
         </p>
         <p class="sm">
-          We would rather you heard the limits from us on a web page than found them yourself in
-          month four. If a standard here matters to you and we have not implemented it in the way
-          you need, that is a conversation for the diagnostic week, and the answer is sometimes
-          that we should not build the thing at all.
+          Better you hear the limits here than find them in month four. If one matters and we have not built it your way, that is the diagnostic week.
         </p>
       </div>
     </div>
@@ -1068,8 +1012,7 @@ ratio     = value ÷ spend</pre>
       <h2>Diagnose first. Build second. Hand over always.</h2>
       <p class="frame">Five phases. Six weeks to live. Then continuous.</p>
       <p class="lead">
-        We will not quote a build before we understand the work. The first phase is deliberately
-        small and fixed price, so you can stop after it with something useful in hand.
+        Small and fixed price first, so you can stop after it with something useful in hand.
       </p>
     </div>
 

@@ -111,8 +111,13 @@
   --r: 10px;
   --r-lg: 14px;
 
-  --font: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+  /* Instrument Sans and Instrument Serif are designed as companions, so the
+     pairing is a decision rather than a coincidence. Editorial serif for
+     display, precise grotesque for body, and a mono with enough character to
+     carry the terminal, which is a major surface on this page. */
+  --font: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
+  --mono: 'Geist Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
 
   --maxw: 1200px;
   --gut: var(--sp6);
@@ -148,8 +153,12 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* ----------------------------------------------------------------- type -- */
 
 h1, h2, h3, h4 { margin: 0; line-height: 1.12; letter-spacing: -0.022em; font-weight: 600; }
-h1 { font-size: clamp(38px, 4.6vw, 60px); letter-spacing: -0.035em; line-height: 1.04; }
-h2 { font-size: clamp(26px, 3vw, 38px); letter-spacing: -0.03em; }
+
+/* Display sizes take the serif. Sub-heads stay in the grotesque, because a
+   serif at 17px on a dense page costs legibility for no gain. */
+h1, h2 { font-family: var(--display); font-weight: 400; }
+h1 { font-size: clamp(42px, 5.4vw, 74px); letter-spacing: -0.018em; line-height: 1.0; }
+h2 { font-size: clamp(29px, 3.5vw, 46px); letter-spacing: -0.014em; line-height: 1.08; }
 h3 { font-size: 17px; letter-spacing: -0.012em; }
 h4 { font-size: 15px; letter-spacing: -0.008em; }
 
@@ -1072,11 +1081,99 @@ h1 .hl::after {
   z-index: 0;
   pointer-events: none;
   display: block;
-  -webkit-mask-image: radial-gradient(135% 115% at 45% 45%, #000 45%, transparent 92%);
-  mask-image: radial-gradient(135% 115% at 45% 45%, #000 45%, transparent 92%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 34%, rgba(0,0,0,0.55) 62%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 34%, rgba(0,0,0,0.55) 62%, #000 100%);
 }
 
 /* Under the terminal plate the graph would fight the code, so it is dimmer
    on the wide layout where the two overlap. */
-@media (min-width: 900px) { .mesh { opacity: 0.85; } }
-@media (max-width: 899px) { .mesh { opacity: 0.5; } }
+@media (min-width: 900px) { .mesh { opacity: 0.6; } }
+@media (max-width: 899px) { .mesh { opacity: 0.32; } }
+
+/* The terminal plate is opaque and must sit above the canvas, not have the
+   graph drawn across it. */
+.hero .term { position: relative; z-index: 2; }
+.hero .wrap, .hero .hero-grid, .hero .stats { position: relative; z-index: 1; }
+
+/* ================================================== page-wide visual system
+   Motion and interest were confined to the hero, which made everything below
+   read as an appendix. Three devices carry the design through every section.
+--------------------------------------------------------------------------- */
+
+/* 1. The section numeral, set huge in the display serif and cropped by the
+      section edge. Editorial, cheap, and it gives every section an anchor. */
+
+.sec, .sec-sm { position: relative; overflow: hidden; }
+.sec > .wrap, .sec-sm > .wrap { position: relative; z-index: 1; }
+
+.head { position: relative; }
+.head::before {
+  content: attr(data-n);
+  position: absolute;
+  right: 0;
+  top: -0.34em;
+  font-family: var(--display);
+  font-size: clamp(120px, 17vw, 260px);
+  line-height: 0.8;
+  font-weight: 400;
+  color: var(--t1);
+  opacity: 0.045;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+  letter-spacing: -0.05em;
+}
+@media (max-width: 760px) { .head::before { opacity: 0.03; font-size: 42vw; top: -0.2em; } }
+
+/* 2. A hairline that draws itself across the top of every section as it
+      arrives, so the page has a rhythm rather than just stacking. */
+
+.sec > .wrap::before {
+  content: '';
+  position: absolute;
+  left: var(--gut); right: var(--gut); top: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--amber), transparent 70%);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.5;
+}
+.sec.seen > .wrap::before { transform: scaleX(1); }
+
+/* 3. Cards respond to the pointer. A cheap effect, but its absence is what
+      makes a page feel like a printout. */
+
+.card, .panel, .std > article {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease, background 0.35s ease;
+}
+.g .card:hover { transform: translateY(-3px); border-color: var(--line-2); }
+
+/* A pointer-tracked highlight, driven by two custom properties set in script. */
+.card, .panel {
+  position: relative;
+  --mx: 50%;
+  --my: 50%;
+}
+.g .card::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(220px circle at var(--mx) var(--my), var(--amber-dim), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.g .card:hover::after { opacity: 1; }
+
+/* The eyebrow gets a rule that grows with it, tying every section head to the
+   same motif as the hero underline. */
+.eyebrow { position: relative; padding-left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sec > .wrap::before { transform: scaleX(1); transition: none; }
+  .card, .panel, .std > article { transition: none; }
+  .g .card:hover { transform: none; }
+  .g .card::after { display: none; }
+}
