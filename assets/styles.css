@@ -1,3 +1,47 @@
+/* ==================================================================== fonts
+   Self-hosted. Google was returning 404 for the Geist Mono files, so the
+   terminal fell back to a system mono, and self-hosting also removes every
+   external request from the page. Latin subset, and the two variable files
+   cover their whole weight range in one request each.
+
+   Licensed under the SIL Open Font License 1.1. See assets/fonts/LICENSE.md.
+
+   swap, not block: the page is legible in a fallback immediately and reflows
+   once, which is the right trade when the copy is the product.
+--------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/instrument-sans-var.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/instrument-serif-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Instrument Serif';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/instrument-serif-400-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('fonts/geist-mono-var.woff2') format('woff2');
+}
+
 /* ClicqSolve Sequent
    ---------------------------------------------------------------------------
    Light by default, dark on the toggle. Dense and product grade. Typography
