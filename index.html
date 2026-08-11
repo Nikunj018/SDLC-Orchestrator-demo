@@ -36,6 +36,7 @@
 
 <!-- ================================================================ hero -->
 <header class="hero" id="top">
+  <canvas class="mesh" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-grid">
       <div>
@@ -1181,72 +1182,6 @@ ratio     = value ÷ spend</pre>
           <li>Under 20 engineers. Off the shelf tools will serve you better and cost less.</li>
         </ul>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================================================================= faq -->
-<section class="sec" id="faq">
-  <div class="wrap">
-    <div class="head rv">
-      <span class="eyebrow">14 / Questions</span>
-      <h2>What engineering leaders ask</h2>
-    </div>
-
-    <div class="faq rv">
-      <details>
-        <summary>Does this replace engineers?</summary>
-        <div class="ans">
-          <p>No, and we will not pitch it that way. Every gate needs a person with the judgement to approve or reject it, and the quality of a run depends heavily on that person.</p>
-          <p>What changes is what the engineer spends the day on: less re-reading tickets and re-grepping the same directories, more deciding. Teams generally use the recovered time to clear backlog, not to shrink.</p>
-        </div>
-      </details>
-      <details>
-        <summary>How is this different from Copilot, or an agent mode we already have?</summary>
-        <div class="ans">
-          <p>Those are excellent at the implementation step, which is one step of many here. What we build is the process around it: an agent whose only job is to attack the plan, a QA stage that must show the test failing first, a review that attests which hunks it read, and gates that stop the whole thing until a human decides.</p>
-          <p>In practice Sequent often calls a coding assistant to do the typing. The value is the structure and the evidence, not the code generation.</p>
-        </div>
-      </details>
-      <details>
-        <summary>What stops it committing something bad?</summary>
-        <div class="ans">
-          <p>Delivery is a separate agent that verifies it was explicitly told Gate 4 was approved, in that invocation. It will not act on "QA passed" or "the reviewer approved". It never merges, never force pushes, and never touches your default branch.</p>
-          <p>And because every stage wrote its evidence to disk, a bad outcome is diagnosable afterwards rather than a mystery.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Do we own it, or licence it?</summary>
-        <div class="ans">
-          <p>You own it. The source, the agent definitions, the prompts and the integration code, delivered into your repositories and running in your environment. There is no runtime that phones home and no licence that expires. If you stop working with us, nothing stops working.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Where does our code and data go?</summary>
-        <div class="ans">
-          <p>Nowhere we control. Sequent runs on your machines against your repositories, and talks to whichever model provider you choose. We do not host your data and nothing you give us trains anything.</p>
-          <p>For regulated work, agents can point at a model deployment inside your own cloud tenancy, so nothing leaves your boundary.</p>
-        </div>
-      </details>
-      <details>
-        <summary>How long does a ticket take, and what does a run cost?</summary>
-        <div class="ans">
-          <p>The worked example above is 17 minutes of agent time across ten stages, plus however long the four approvals take, which is up to your team's availability and is usually the larger number. Complex features take longer and often need a gate rejected and a stage re-run. That is the system working.</p>
-          <p>Cost is model usage per run, billed by whichever provider you pick. Nothing goes through us. Agents are assigned models by weight, so the cheap stages use cheap models.</p>
-        </div>
-      </details>
-      <details>
-        <summary>Can we change the agents?</summary>
-        <div class="ans">
-          <p>You are expected to. They are markdown files in your repository. Teams routinely tighten the security checklist, add a stage for their own compliance step, or rewrite the reviewer to match their code review culture. The retro agent proposes those edits after each run, and a human decides whether to take them.</p>
-        </div>
-      </details>
-      <details>
-        <summary>What if our codebase is much bigger than the demo?</summary>
-        <div class="ans">
-          <p>The analysis stage takes longer and your repository conventions file matters more. The pipeline does not change. Week one of the build phase is us running this against your codebase, so you find out on real code rather than on ours.</p>
-        </div>
-      </details>
     </div>
   </div>
 </section>

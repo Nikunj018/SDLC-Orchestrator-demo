@@ -852,3 +852,343 @@
     barObs.observe(numbers);
   }
 })();
+
+/* ---------------------------------------------------------------------------
+   The hero graph.
+
+   A generative background that is on message rather than decorative: nodes are
+   specialists, edges are handoffs, and the travelling pulses are work moving
+   through the pipeline. When a pulse lands, the node it arrives at brightens
+   and passes it on. Four of the nodes are gates, and a pulse waits at a gate
+   before continuing, which is the whole product argument rendered as motion.
+
+   Constraints it holds to:
+     - Contrast stays low enough that the headline is never harder to read.
+     - Pauses entirely when scrolled out of view, and on a hidden tab.
+     - Device pixel ratio aware, capped at 2 so a 3x phone does not render 9x.
+     - Reduced motion draws one static frame instead of animating.
+     - Theme aware: it reads the CSS custom properties rather than hardcoding.
+--------------------------------------------------------------------------- */
+
+(function () {
+  'use strict';
+
+  var canvas = document.querySelector('.mesh');
+  if (!canvas || !canvas.getContext) return;
+
+  var ctx = canvas.getContext('2d');
+  var reduced =
+    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Loose pipeline topology in normalised space. Not a grid and not random:
+  // it reads left to right with the parallel pair splitting and rejoining,
+  // which is the shape of the real route.
+  var LAYOUT = [
+    { x: 0.06, y: 0.5 },
+    { x: 0.17, y: 0.34 },
+    { x: 0.17, y: 0.66 },
+    { x: 0.3, y: 0.5, gate: true },
+    { x: 0.43, y: 0.28 },
+    { x: 0.43, y: 0.72 },
+    { x: 0.55, y: 0.5, gate: true },
+    { x: 0.67, y: 0.32 },
+    { x: 0.67, y: 0.68 },
+    { x: 0.78, y: 0.5, gate: true },
+    { x: 0.89, y: 0.38 },
+    { x: 0.89, y: 0.62 },
+    { x: 0.97, y: 0.5, gate: true },
+  ];
+
+  var EDGES = [
+    [0, 1], [0, 2], [1, 3], [2, 3],
+    [3, 4], [3, 5], [4, 6], [5, 6],
+    [6, 7], [6, 8], [7, 9], [8, 9],
+    [9, 10], [9, 11], [10, 12], [11, 12],
+  ];
+
+  var nodes = [];
+  var pulses = [];
+  var blooms = [];
+  var w = 0;
+  var h = 0;
+  var dpr = 1;
+  var raf = null;
+  var running = false;
+  var last = 0;
+  var drawTime = 0;
+
+  // Read colour from the stylesheet so the toggle carries the canvas with it.
+  var ink = { line: '#000', node: '#000', gate: '#000', bloomWarm: 'rgba(0,0,0,0)', bloomCool: 'rgba(0,0,0,0)', bloomNone: 'rgba(0,0,0,0)' };
+
+  // Accepts #rgb, #rrggbb or an rgb() string and returns it at a given alpha.
+  function hexA(c, a) {
+    c = String(c).trim();
+    var m = c.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (m) {
+      var v = m[1];
+      if (v.length === 3) v = v[0] + v[0] + v[1] + v[1] + v[2] + v[2];
+      var num = parseInt(v, 16);
+      return 'rgba(' + ((num >> 16) & 255) + ',' + ((num >> 8) & 255) + ',' + (num & 255) + ',' + a + ')';
+    }
+    m = c.match(/rgba?(([^)]+))/);
+    if (m) {
+      var parts = m[1].split(",");
+      return 'rgba(' + (+parts[0]) + ',' + (+parts[1]) + ',' + (+parts[2]) + ',' + a + ')';
+    }
+    return 'rgba(0,0,0,' + a + ')';
+  }
+  function readTheme() {
+    var cs = getComputedStyle(document.documentElement);
+    var amber = cs.getPropertyValue('--amber').trim() || '#96590a';
+    var t3 = cs.getPropertyValue('--t3').trim() || '#6b6c72';
+    ink.line = t3;
+    ink.node = t3;
+    ink.gate = amber;
+
+    // Blooms are tinted from the accent and the page ink, kept very low so
+    // they add depth without becoming a gradient background.
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    ink.bloomWarm = hexA(amber, dark ? 0.16 : 0.13);
+    ink.bloomCool = hexA(t3, dark ? 0.15 : 0.1);
+    ink.bloomNone = hexA(amber, 0);
+  }
+
+  function size() {
+    var r = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = Math.max(1, Math.round(r.width));
+    h = Math.max(1, Math.round(r.height));
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    blooms = [
+      { x: 0.22, y: 0.34, r: 0.5, ph: 0.0, warm: true },
+      { x: 0.62, y: 0.68, r: 0.42, ph: 2.1, warm: false },
+      { x: 0.86, y: 0.26, r: 0.36, ph: 4.2, warm: true },
+    ];
+
+    // Large, slow light fields. They are what stops a flat light page
+    // reading as a document, and they sit under everything else.
+    blooms = [
+      { x: 0.2, y: 0.3, r: 0.62, ph: 0.0, warm: true },
+      { x: 0.6, y: 0.72, r: 0.5, ph: 2.1, warm: false },
+      { x: 0.88, y: 0.22, r: 0.44, ph: 4.2, warm: true },
+    ];
+
+    nodes = LAYOUT.map(function (n, i) {
+      return {
+        x: n.x * w,
+        y: n.y * h,
+        gate: !!n.gate,
+        // A slow independent drift, so the graph breathes without wandering.
+        px: n.x * w,
+        py: n.y * h,
+        ph: i * 0.9,
+        lit: 0,
+      };
+    });
+  }
+
+  function spawn() {
+    // Start a pulse at the entry node. One at a time from the source keeps it
+    // legible; branches multiply it naturally.
+    pulses.push({ from: 0, to: Math.random() < 0.5 ? 1 : 2, t: 0, wait: 0 });
+  }
+
+  function step(dt, time) {
+    // Drift: a small lissajous per node around its home position.
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var a = time * 0.00016 + n.ph;
+      n.x = n.px + Math.sin(a) * (w * 0.006);
+      n.y = n.py + Math.cos(a * 1.3) * (h * 0.012);
+      if (n.lit > 0) n.lit = Math.max(0, n.lit - dt * 0.0016);
+    }
+
+    for (var p = pulses.length - 1; p >= 0; p--) {
+      var pu = pulses[p];
+
+      if (pu.wait > 0) {
+        pu.wait -= dt;
+        continue;
+      }
+
+      pu.t += dt * 0.00055;
+
+      if (pu.t >= 1) {
+        var arrived = nodes[pu.to];
+        arrived.lit = 1;
+
+        // Where can it go next?
+        var onward = [];
+        for (var e = 0; e < EDGES.length; e++) {
+          if (EDGES[e][0] === pu.to) onward.push(EDGES[e][1]);
+        }
+
+        pulses.splice(p, 1);
+
+        if (onward.length) {
+          for (var o = 0; o < onward.length; o++) {
+            pulses.push({
+              from: pu.to,
+              to: onward[o],
+              t: 0,
+              // A gate holds the work before it passes on. That pause is the
+              // point, so it is the longest beat in the animation.
+              wait: arrived.gate ? 900 : 0,
+            });
+          }
+        }
+      }
+    }
+
+    if (pulses.length === 0) spawn();
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    // Blooms drift on a slow lissajous and are drawn before anything else.
+    for (var bi = 0; bi < blooms.length; bi++) {
+      var bl = blooms[bi];
+      var ba = drawTime * 0.00011 + bl.ph;
+      var bx = (bl.x + Math.sin(ba) * 0.05) * w;
+      var by = (bl.y + Math.cos(ba * 0.8) * 0.06) * h;
+      var br = bl.r * Math.max(w, h) * (0.92 + Math.sin(ba * 1.4) * 0.08);
+      var grd = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+      grd.addColorStop(0, bl.warm ? ink.bloomWarm : ink.bloomCool);
+      grd.addColorStop(1, ink.bloomNone);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    // Edges
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = ink.line;
+    ctx.globalAlpha = 0.42;
+    ctx.beginPath();
+    for (var e = 0; e < EDGES.length; e++) {
+      var a = nodes[EDGES[e][0]];
+      var b = nodes[EDGES[e][1]];
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+    }
+    ctx.stroke();
+
+    // Nodes
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var r = n.gate ? 7 : 4.5;
+
+      ctx.globalAlpha = 0.62 + n.lit * 0.38;
+      ctx.fillStyle = n.gate ? ink.gate : ink.node;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r + n.lit * 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (n.lit > 0.02) {
+        ctx.globalAlpha = n.lit * 0.2;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r + 8 + n.lit * 10, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Pulses
+    for (var p = 0; p < pulses.length; p++) {
+      var pu = pulses[p];
+      var f = nodes[pu.from];
+      var t = nodes[pu.to];
+      var waiting = pu.wait > 0;
+      var pt = waiting ? 0 : pu.t;
+      var x = f.x + (t.x - f.x) * pt;
+      var y = f.y + (t.y - f.y) * pt;
+
+      // A halo, so a pulse reads as light travelling rather than a dot sliding.
+      ctx.globalAlpha = waiting ? 0.16 : 0.12;
+      ctx.fillStyle = ink.gate;
+      ctx.beginPath();
+      ctx.arc(x, y, waiting ? 15 : 11, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = waiting ? 0.95 : 0.82;
+      ctx.beginPath();
+      ctx.arc(x, y, waiting ? 4.4 : 3.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+  }
+
+  function frame(time) {
+    if (!running) return;
+    var dt = Math.min(48, time - (last || time));
+    last = time;
+    drawTime = time;
+    step(dt, time);
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start() {
+    if (running || reduced) return;
+    running = true;
+    last = 0;
+    raf = requestAnimationFrame(frame);
+  }
+
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  readTheme();
+  size();
+
+  if (reduced) {
+    // One frame, so there is still a graph rather than an empty rectangle.
+    nodes[3].lit = 0.6;
+    nodes[6].lit = 0.35;
+    draw();
+  }
+
+  var resizeTimer = null;
+  window.addEventListener(
+    'resize',
+    function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        size();
+        if (reduced) draw();
+      }, 140);
+    },
+    { passive: true }
+  );
+
+  // Only run while it is on screen, and never behind a hidden tab.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
+      },
+      { threshold: 0 }
+    ).observe(canvas);
+  } else {
+    start();
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    document.hidden ? stop() : start();
+  });
+
+  // The theme toggle repaints the graph in the new ink.
+  var themeBtn = document.querySelector('.theme-tog');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      setTimeout(function () { readTheme(); if (reduced) draw(); }, 30);
+    });
+  }
+})();
