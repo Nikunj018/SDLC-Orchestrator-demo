@@ -325,19 +325,50 @@
       ],
     },
     {
-      title: 'Gate 2, then evidence rather than assertion',
-      body: 'The diff is shown and approved. The tester then writes the regression test,' +
-        ' stashes the fix, and runs it to prove the test fails against the broken code. A test' +
-        ' that never failed proves nothing.',
+      title: 'Gate 2, then the tester goes looking for trouble',
+      body: 'The diff is approved. The tester writes the regression test, stashes the fix,'  +
+        ' and runs the test against the broken code to prove it fails. A test that never'  +
+        ' failed proves nothing. Then it runs against the fix, and one case still fails.',
       stage: 'qa',
       wait: 'a human, then nobody',
       writes: '05-qa.md',
       live: 'tester',
       term: [
         ['w1', '› GATE 2 approved'],
-        ['k1', '✓  tester       34 passing            3:36'],
-        ['g1', '   red first: mixed-currency test'],
-        ['g1', '   failed on the old code, pasted'],
+        ['r1', '✗  tester       33 of 34 passing      3:36'],
+        ['g1', '   red first: proven on old code'],
+        ['r1', '   still failing: aging buckets'],
+        ['r1', '   never routed through the helper'],
+        ['', ''],
+      ],
+    },
+    {
+      title: 'The lead sends it back. Nobody told it to',
+      body: 'This is the difference between a team and a queue. The tester rejected the work, so the lead returns it to the developer with the failure attached rather than recording a partial pass and moving on. A human has not been asked for anything yet, because nothing has left the machine.',
+      stage: 'rework',
+      wait: 'nobody. this is the lead deciding',
+      writes: 'events.jsonl',
+      live: 'lead',
+      rework: 'developer',
+      term: [
+        ['a1', '↑  returning to developer'],
+        ['a1', '   sent back by tester'],
+        ['g1', '   reason: 1 site not converted'],
+        ['', ''],
+        ['k1', '✓  developer    attempt 2, 1 site     0:48'],
+        ['', ''],
+      ],
+    },
+    {
+      title: 'Re-validated, and the record keeps both attempts',
+      body: 'The tester runs again and passes. The run does not quietly forget that it took two attempts: the record shows the rejection, who raised it, and what changed. That is what makes the evidence worth reading six months later.',
+      stage: 'qa, attempt 2',
+      wait: 'nobody yet',
+      writes: '05-qa.md',
+      live: 'tester',
+      term: [
+        ['k1', '✓  tester       34 passing            1:12'],
+        ['g1', '   attempt 2 · rejection recorded'],
         ['', ''],
       ],
     },
@@ -425,6 +456,7 @@
 
   var elTerm = el('pl-term');
   var elN = el('pl-n');
+  var elOf = el('pl-of');
   var elTitle = el('pl-title');
   var elBody = el('pl-body');
   var elStage = el('pl-stage');
@@ -520,13 +552,31 @@
     liveNow[step.live] = 1;
     if (step.also) liveNow[step.also] = 1;
 
+    // A specialist the lead sent work back to carries the attempt on its chip,
+    // so the return shows on the rail as well as in the terminal.
+    var reworked = null;
+    for (var s2 = 0; s2 <= index; s2++) if (STEPS[s2].rework) reworked = STEPS[s2].rework;
+
     elAgents.querySelectorAll('li').forEach(function (li) {
       var name = li.getAttribute('data-a');
       if (OFF_ROUTE[name]) li.setAttribute('data-s', 'off');
       else if (liveNow[name]) li.setAttribute('data-s', 'live');
       else if (seen[name]) li.setAttribute('data-s', 'done');
+
       else li.removeAttribute('data-s');
     });
+
+    elAgents.querySelectorAll('.pl-again').forEach(function (b) { b.remove(); });
+    if (reworked) {
+      var chip = elAgents.querySelector('li[data-a="' + reworked + '"]');
+      if (chip) {
+        var badge = document.createElement('span');
+        badge.className = 'pl-again';
+        badge.textContent = '2';
+        badge.title = 'the lead sent work back here';
+        chip.appendChild(badge);
+      }
+    }
 
     // Jira. Status is the latest one set at or before this step.
     var status = 'todo';
@@ -577,7 +627,7 @@
 
   function stop() {
     playing = false;
-    btnPlay.innerHTML = ICON_PLAY + 'Play';
+  btnPlay.innerHTML = ICON_PLAY + 'Play';
     btnPlay.setAttribute('aria-pressed', 'false');
     if (timer) { clearInterval(timer); timer = null; }
   }
@@ -638,6 +688,11 @@
   }
 
   btnPlay.innerHTML = ICON_PLAY + 'Play';
+  // Read the total from the data. It was hardcoded, so adding steps made the
+  // counter quietly lie, and the first version of this fix ran inside stop()
+  // where it only corrected itself after playback ended.
+  if (elOf) elOf.textContent = String(STEPS.length);
+
   go(0, false);
 })();
 
